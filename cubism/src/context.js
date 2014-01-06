@@ -1,5 +1,5 @@
-dnaism.context = function() {
-  var context = new dnaism_context,
+cubism.context = function() {
+  var context = new cubism_context,
       step = 1e4, // ten seconds, in milliseconds
       size = 1440, // four hours at ten seconds, in pixels
       start0, stop0, // the start and stop for the previous change event
@@ -111,7 +111,7 @@ dnaism.context = function() {
     return context;
   };
 
-  d3.select(window).on("keydown.context-" + ++dnaism_id, function() {
+  d3.select(window).on("keydown.context-" + ++cubism_id, function() {
     switch (!d3.event.metaKey && d3.event.keyCode) {
       case 37: // left
         if (focus == null) focus = size - 1;
@@ -129,10 +129,10 @@ dnaism.context = function() {
   return update();
 };
 
-function dnaism_context() {}
+function cubism_context() {}
 
-var dnaism_contextPrototype = dnaism.context.prototype = dnaism_context.prototype;
+var cubism_contextPrototype = cubism.context.prototype = cubism_context.prototype;
 
-dnaism_contextPrototype.constant = function(value) {
-  return new dnaism_metricConstant(this, +value);
+cubism_contextPrototype.constant = function(value) {
+  return new cubism_metricConstant(this, +value);
 };

@@ -1,14 +1,14 @@
-dnaism_contextPrototype.axis = function() {
+cubism_contextPrototype.axis = function() {
   var context = this,
       scale = context.scale,
       axis_ = d3.svg.axis().scale(scale);
 
-  var format = context.step() < 6e4 ? dnaism_axisFormatSeconds
-      : context.step() < 864e5 ? dnaism_axisFormatMinutes
-      : dnaism_axisFormatDays;
+  var format = context.step() < 6e4 ? cubism_axisFormatSeconds
+      : context.step() < 864e5 ? cubism_axisFormatMinutes
+      : cubism_axisFormatDays;
 
   function axis(selection) {
-    var id = ++dnaism_id,
+    var id = ++cubism_id,
         tick;
 
     var g = selection.append("svg")
@@ -61,6 +61,6 @@ dnaism_contextPrototype.axis = function() {
       "tickFormat");
 };
 
-var dnaism_axisFormatSeconds = d3.time.format("%I:%M:%S %p"),
-    dnaism_axisFormatMinutes = d3.time.format("%I:%M %p"),
-    dnaism_axisFormatDays = d3.time.format("%B %d");
+var cubism_axisFormatSeconds = d3.time.format("%I:%M:%S %p"),
+    cubism_axisFormatMinutes = d3.time.format("%I:%M %p"),
+    cubism_axisFormatDays = d3.time.format("%B %d");

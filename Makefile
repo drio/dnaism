@@ -1,19 +1,12 @@
 JS_COMPILER = ./node_modules/uglify-js/bin/uglifyjs
 
-all: cubism.v1.min.js
+#all: dnaism.v1.min.js
+all: dnaism.v1.js
 
-cubism.v1.js: \
-	src/cubism.js \
-	src/id.js \
-	src/identity.js \
-	src/option.js \
+dnaism.v1.js: \
+	src/dnaism.js \
 	src/context.js \
-	src/metric.js \
-	src/metric-constant.js \
-	src/metric-operator.js \
-	src/horizon.js \
 	src/axis.js \
-	src/rule.js \
 	Makefile
 
 %.min.js: %.js Makefile
@@ -27,6 +20,11 @@ cubism.v1.js: \
 	@echo '})(this);' >> $@
 	@chmod a-w $@
 
-clean:
-	rm -f cubism.v1.js cubism.v1.min.js package.json
+test: dnaism.v1.js
+	@echo "var d3 = require('d3');" > tests/dnaism.test.js
+	@cat $< | grep -v "(this);" | grep -v "(exports)" >> tests/dnaism.test.js
+	@chmod 755 tests/*.js
+	tests/main.js
 
+clean:
+	rm -f dnaism.v1.js dnaism.v1.min.js
