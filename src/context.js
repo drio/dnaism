@@ -1,56 +1,35 @@
 dnaism.context = function() {
   var context = new dnaism_context,
-      step = 1e4, // ten seconds, in milliseconds
-      size = 1440, // four hours at ten seconds, in pixels
-      start0, stop0, // the start and stop for the previous change event
-      start1, stop1, // the start and stop for the next prepare event
-      serverDelay = 5e3,
-      clientDelay = 5e3,
-      event = d3.dispatch("prepare", "beforechange", "change", "focus"),
-      scale = context.scale = d3.time.scale().range([0, size]),
-      timeout,
+      step = 1e4,  // 10k bp
+      size = 1440, // 10k * 1440 pixes = 14M bases
+      chrm,        // chrm
+      start, stop, // start/stop of the current region
+      event = d3.dispatch("focus"),
+      scale = context.scale = d3.scale.linear.range([0, size]),
       focus;
 
   function update() {
-    var now = Date.now();
-    stop0 = new Date(Math.floor((now - serverDelay - clientDelay) / step) * step);
-    start0 = new Date(stop0 - size * step);
-    stop1 = new Date(Math.floor((now - serverDelay) / step) * step);
-    start1 = new Date(stop1 - size * step);
-    scale.domain([start0, stop0]);
+    scale.domain([start, stop]);
     return context;
   }
 
-  context.start = function() {
-    if (timeout) clearTimeout(timeout);
-    var delay = +stop1 + serverDelay - Date.now();
-
-    // If we're too late for the first prepare event, skip it.
-    if (delay < clientDelay) delay += step;
-
-    timeout = setTimeout(function prepare() {
-      stop1 = new Date(Math.floor((Date.now() - serverDelay) / step) * step);
-      start1 = new Date(stop1 - size * step);
-      event.prepare.call(context, start1, stop1);
-
-      setTimeout(function() {
-        scale.domain([start0 = start1, stop0 = stop1]);
-        event.beforechange.call(context, start1, stop1);
-        event.change.call(context, start1, stop1);
-        event.focus.call(context, focus);
-      }, clientDelay);
-
-      timeout = setTimeout(prepare, step);
-    }, delay);
-    return context;
+  context.chrm = function(_) {
+    if (!arguments.length) return chrm;
+    chrm = _;
+    return update();
   };
 
-  context.stop = function() {
-    timeout = clearTimeout(timeout);
-    return context;
+  context.start = function(_) {
+    if (!arguments.length) return start;
+    start = +_;
+    return update();
   };
 
-  timeout = setTimeout(context.start, 10);
+  context.stop = function(_) {
+    if (!arguments.length) return stop;
+    stop = +_;
+    return update();
+  };
 
   // Set or get the step interval in milliseconds.
   // Defaults to ten seconds.
@@ -60,29 +39,10 @@ dnaism.context = function() {
     return update();
   };
 
-  // Set or get the context size (the count of metric values).
-  // Defaults to 1440 (four hours at ten seconds).
+  // Defaults to 1440 pixels (14M bases).
   context.size = function(_) {
     if (!arguments.length) return size;
     scale.range([0, size = +_]);
-    return update();
-  };
-
-  // The server delay is the amount of time we wait for the server to compute a
-  // metric. This delay may result from clock skew or from delays collecting
-  // metrics from various hosts. Defaults to 4 seconds.
-  context.serverDelay = function(_) {
-    if (!arguments.length) return serverDelay;
-    serverDelay = +_;
-    return update();
-  };
-
-  // The client delay is the amount of additional time we wait to fetch those
-  // metrics from the server. The client and server delay combined represent the
-  // age of the most recent displayed metric. Defaults to 1 second.
-  context.clientDelay = function(_) {
-    if (!arguments.length) return clientDelay;
-    clientDelay = +_;
     return update();
   };
 
@@ -94,37 +54,20 @@ dnaism.context = function() {
 
   // Add, remove or get listeners for events.
   context.on = function(type, listener) {
-    if (arguments.length < 2) return event.on(type);
+    if (arguments.length < 2) return event.on(type); // return the listener for that event
 
-    event.on(type, listener);
+    event.on(type, listener); // set the listener for that event
 
     // Notify the listener of the current start and stop time, as appropriate.
     // This way, metrics can make requests for data immediately,
     // and likewise the axis can display itself synchronously.
     if (listener != null) {
-      if (/^prepare(\.|$)/.test(type)) listener.call(context, start1, stop1);
-      if (/^beforechange(\.|$)/.test(type)) listener.call(context, start0, stop0);
-      if (/^change(\.|$)/.test(type)) listener.call(context, start0, stop0);
       if (/^focus(\.|$)/.test(type)) listener.call(context, focus);
     }
 
     return context;
   };
 
-  d3.select(window).on("keydown.context-" + ++dnaism_id, function() {
-    switch (!d3.event.metaKey && d3.event.keyCode) {
-      case 37: // left
-        if (focus == null) focus = size - 1;
-        if (focus > 0) context.focus(--focus);
-        break;
-      case 39: // right
-        if (focus == null) focus = size - 2;
-        if (focus < size - 1) context.focus(++focus);
-        break;
-      default: return;
-    }
-    d3.event.preventDefault();
-  });
 
   return update();
 };
@@ -132,7 +75,3 @@ dnaism.context = function() {
 function dnaism_context() {}
 
 var dnaism_contextPrototype = dnaism.context.prototype = dnaism_context.prototype;
-
-dnaism_contextPrototype.constant = function(value) {
-  return new dnaism_metricConstant(this, +value);
-};
