@@ -3,9 +3,8 @@ dnaism_contextPrototype.axis = function() {
       scale = context.scale,
       axis_ = d3.svg.axis().scale(scale);
 
-  var format = context.step() < 6e4 ? dnaism_axisFormatSeconds
-      : context.step() < 864e5 ? dnaism_axisFormatMinutes
-      : dnaism_axisFormatDays;
+  //var format = d3.format("s");
+  var format = function(d) { return context.chrm() + ":" + d3.format("s")(d); };
 
   function axis(selection) {
     var id = ++dnaism_id,
@@ -18,13 +17,6 @@ dnaism_contextPrototype.axis = function() {
       .append("g")
         .attr("transform", "translate(0," + (axis_.orient() === "top" ? 27 : 4) + ")")
         .call(axis_);
-
-    context.on("change.axis-" + id, function() {
-      g.call(axis_);
-      if (!tick) tick = d3.select(g.node().appendChild(g.selectAll("text").node().cloneNode(true)))
-          .style("display", "none")
-          .text(null);
-    });
 
     context.on("focus.axis-" + id, function(i) {
       if (tick) {
@@ -58,9 +50,5 @@ dnaism_contextPrototype.axis = function() {
       "tickSubdivide",
       "tickSize",
       "tickPadding",
-      "tickFormat");
+      "tickFormat").tickFormat(format);
 };
-
-var dnaism_axisFormatSeconds = d3.time.format("%I:%M:%S %p"),
-    dnaism_axisFormatMinutes = d3.time.format("%I:%M %p"),
-    dnaism_axisFormatDays = d3.time.format("%B %d");

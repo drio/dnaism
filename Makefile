@@ -5,6 +5,7 @@ all: dnaism.v1.js
 
 dnaism.v1.js: \
 	src/dnaism.js \
+	src/id.js \
 	src/context.js \
 	src/axis.js \
 	Makefile

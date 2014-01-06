@@ -5,7 +5,7 @@ dnaism.context = function() {
       chrm,        // chrm
       start, stop, // start/stop of the current region
       event = d3.dispatch("focus"),
-      scale = context.scale = d3.scale.linear.range([0, size]),
+      scale = context.scale = d3.scale.linear().range([0, size]),
       focus;
 
   function update() {

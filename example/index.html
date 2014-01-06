@@ -109,12 +109,12 @@ header {
 <script>
 
 var context = dnaism.context()
-//    .serverDelay(new Date(2012, 4, 2) - Date.now())
-    .step(864e5) // 24 hours per each pixel
-    .size(1280)  // number of pixes to use for the viz
-    .stop();     // Since data is static, we don't want to dispatch more events
+               .start(5000)
+               .stop(12000)
+               .size(1280)
+               .chrm('chr1')
+               .step(20000);
 
-if (1===2) {
 
   // Create the top and bottom axis
   d3.select("#demo").selectAll(".axis") // perform the selection of divs (axis class); they don't exists yet
@@ -124,6 +124,7 @@ if (1===2) {
       // per each div element (top or bottom) run context.axis() which will add all the svg elements as necessary
       .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 
+if (1===2) {
   // Create a new rule which is the vertical line that updates on mousemove.
   d3.select("body").append("div")
       .attr("class", "rule")
