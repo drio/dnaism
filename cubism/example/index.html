@@ -127,8 +127,6 @@ d3.select("body").append("div")
     .attr("class", "rule")
     .call(context.rule());
 
-if (1===2) {
-
 // Create all the divs that will contain the horizon charts
 d3.select("body").selectAll(".horizon")
     //.data(["AAPL", "BIDU", "SINA", "GOOG", "MSFT", "YHOO", "ADBE", "REDF", "INSP", "IACI", "AVID", "CCUR", "DELL", "DGII", "HPQ", "SGI", "SMCI", "SNDK", "SYNA"].map(stock))
@@ -176,7 +174,6 @@ function stock(name) {
       callback(null, values.slice(-context.size()));
     });
   }, name);
-}
 }
 </script>
 

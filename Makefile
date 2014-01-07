@@ -8,6 +8,8 @@ dnaism.v1.js: \
 	src/id.js \
 	src/identity.js \
 	src/context.js \
+	src/metric.js \
+	src/horizon.js \
 	src/axis.js \
 	src/rule.js \
 	Makefile

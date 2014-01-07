@@ -4,7 +4,7 @@ dnaism.context = function() {
       size = 1440, // 10k * 1440 pixes = 14M bases
       chrm,        // chrm
       start, stop, // start/stop of the current region
-      event = d3.dispatch("focus"),
+      event = d3.dispatch("focus", "change", "prepare", "beforechange"),
       scale = context.scale = d3.scale.linear().range([0, size]),
       focus;
 
@@ -61,8 +61,11 @@ dnaism.context = function() {
     // Notify the listener of the current start and stop time, as appropriate.
     // This way, metrics can make requests for data immediately,
     // and likewise the axis can display itself synchronously.
-    if (listener != null) {
+    if (listener !== null) {
       if (/^focus(\.|$)/.test(type)) listener.call(context, focus);
+      if (/^change(\.|$)/.test(type)) listener.call(context, start, stop);
+      if (/^prepare(\.|$)/.test(type)) listener.call(context, start, stop);
+      if (/^beforechange(\.|$)/.test(type)) listener.call(context, start, stop);
     }
 
     return context;
