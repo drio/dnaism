@@ -124,12 +124,14 @@ var context = dnaism.context()
       // per each div element (top or bottom) run context.axis() which will add all the svg elements as necessary
       .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 
-if (1===2) {
+
   // Create a new rule which is the vertical line that updates on mousemove.
   d3.select("body").append("div")
       .attr("class", "rule")
       .call(context.rule());
 
+
+if (1===2) {
 
   // Create all the divs that will contain the horizon charts
   d3.select("body").selectAll(".horizon")
