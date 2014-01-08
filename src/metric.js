@@ -50,6 +50,7 @@ dnaism_contextPrototype.metric = function(request, name) {
       stop,
       step = context.step(),
       size = context.size(),
+      chrm = context.chrm(),
       values = [],
       event = d3.dispatch("change"),
       listening = 0,
@@ -60,9 +61,11 @@ dnaism_contextPrototype.metric = function(request, name) {
     var steps = Math.min(size, Math.round((start1 - start) / step));
     if (!steps || fetching) return; // already fetched, or fetching!
     fetching = true;
+    /*
     steps = Math.min(size, steps + dnaism_metricOverlap);
-    var start0 = new Date(stop - steps * step);
-    request(start0, stop, step, function(error, data) {
+    var start0 = stop - steps * step;
+    */
+    request(start1, stop, chrm, step, function(error, data) {
       fetching = false;
       if (error) return console.warn(error);
       var i = isFinite(start) ? Math.round((start0 - start) / step) : 0;
@@ -130,6 +133,6 @@ var dnaism_metricOverlap = 6;
 // Wraps the specified request implementation, and shifts time by the given offset.
 function dnaism_metricShift(request, offset) {
   return function(start, stop, step, callback) {
-    request(new Date(+start + offset), new Date(+stop + offset), step, callback);
+    request(+start + offset, +stop + offset, chrm, step, callback);
   };
 }

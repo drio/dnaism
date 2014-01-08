@@ -110,10 +110,10 @@ header {
 
 var context = dnaism.context()
                .start(5000)
-               .stop(12000)
+               .stop(100000)
                .size(1280)
                .chrm('chr1')
-               .step(20000);
+               .step(50);
 
 
 // Create the top and bottom axis
@@ -180,20 +180,20 @@ function stock(name) {
       });
     }, name);
   } else {
-    return context.metric(function(start, stop, step, callback) {
+    return context.metric(function(start, stop, chrm, step, callback) {
       var values = [], i;
 
       start = +start;
       stop = +stop;
 
-      i = Math.floor((Math.random()*1000)+1);
+      i = Math.floor((Math.random()*10000)+1);
       while (start < stop) {
         start += step;
         values.push(i);
         i++;
       }
 
-      callback(null, values);
+      callback(null, values.slice(-context.size()));
     }, name);
   }
 }
