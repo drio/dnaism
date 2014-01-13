@@ -186,11 +186,10 @@ function stock(name) {
       start = +start;
       stop = +stop;
 
-      i = Math.floor((Math.random()*10000)+1);
+      console.log(start, stop, chrm, step);
       while (start < stop) {
+        values.push(start);
         start += step;
-        values.push(i);
-        i++;
       }
 
       callback(null, values.slice(-context.size()));
