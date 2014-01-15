@@ -65,10 +65,11 @@ dnaism_contextPrototype.metric = function(request, name) {
     steps = Math.min(size, steps + dnaism_metricOverlap);
     var start0 = stop - steps * step;
     */
+    console.log("Requesting ..." + chrm + ":" + start1 + "," + stop);
     request(start1, stop, chrm, step, function(error, data) {
       fetching = false;
       if (error) return console.warn(error);
-      var i = isFinite(start) ? Math.round((start0 - start) / step) : 0;
+      var i = isFinite(start) ? Math.round((start1 - start) / step) : 0;
       for (var j = 0, m = data.length; j < m; ++j) values[j + i] = data[j];
       event.change.call(metric, start, stop);
     });
@@ -85,6 +86,11 @@ dnaism_contextPrototype.metric = function(request, name) {
   //
   metric.valueAt = function(i) {
     return values[i];
+  };
+
+  // drd
+  metric.values = function() {
+    return values;
   };
 
   //

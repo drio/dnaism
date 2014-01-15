@@ -127,6 +127,8 @@ dnaism_contextPrototype.horizon = function() {
         if (i == null) i = width - 1;
         var value = metric_.valueAt(i);
         span.datum(value).text(isNaN(value) ? null : format);
+        if (i === width - 1)
+          span.datum(value).text(null); // Do not show last value when not in focus
       }
 
       // Update the chart when the context changes.

@@ -12,6 +12,7 @@ dnaism.v1.js: \
 	src/horizon.js \
 	src/axis.js \
 	src/rule.js \
+	src/bedfile.js \
 	Makefile
 
 %.min.js: %.js Makefile

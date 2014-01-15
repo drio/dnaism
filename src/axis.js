@@ -1,3 +1,4 @@
+// ... { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 dnaism_contextPrototype.axis = function() {
   var context = this,
       scale = context.scale,
