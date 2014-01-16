@@ -2,3 +2,6 @@ example/dnaism.v1.js
 dnaism.v1.js
 node_modules/
 tests/dnaism.test.js
+example/depth/*.bed
+example/depth/bak/
+example/depth/index.html
