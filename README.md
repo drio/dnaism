@@ -6,4 +6,4 @@ DNAism is a modified version of [Cubism](http://square.github.io/cubism/) aimed 
 
 Here is a screenshot of DNAism visualizing a region of simulated random data for 23+ samples:
 
-![](http://cl.ly/image/2J223S3S0t1z)
+![](http://f.cl.ly/items/382L0O252a3j2w2w2F1b/Screen%20Shot%202014-01-16%20at%2010.43.42%20AM.png)
