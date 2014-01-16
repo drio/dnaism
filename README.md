@@ -2,7 +2,8 @@
 
 DNAism is a modified version of [Cubism](http://square.github.io/cubism/) aimed to work with genomic data.
 
-[Cubism](http://square.github.io/cubism/) effectively allows you to visualize time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts. In the x-axis you have time and in the y-axis you have whatever metric you are exploring for your dataset. For dna we have genomic coordinates instead of time.
+[Cubism](http://square.github.io/cubism/) effectively allows you to visualize time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts. The data in your metrics changes over time, with DNA
+it changes over genomic locations.
 
 I will be modifying this readme a lot so stay tunned!
 
