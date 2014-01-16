@@ -7,6 +7,9 @@ it changes over genomic coordinates.
 
 I will be modifying this readme a lot so stay tunned!
 
-Here is a screenshot of DNAism visualizing a region of simulated random data for 23+ samples:
+Here is a screenshot of DNAism visualizing a region of simulated random data for 23+ samples. It generates 
+[Bed](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) files for a small region of a genome. It introduces
+constant values on certain intervals to allow visual validation. The details of how these files are generated
+is [here](https://github.com/drio/dnaism/blob/master/example/depth/build.sh).
 
 ![](http://f.cl.ly/items/382L0O252a3j2w2w2F1b/Screen%20Shot%202014-01-16%20at%2010.43.42%20AM.png)
