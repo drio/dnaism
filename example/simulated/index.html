@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  margin: 30px auto;
+  width: 1280px;
+  position: relative;
+}
+
+header {
+  padding: 6px 0;
+}
+
+.group {
+  margin-bottom: 1em;
+}
+
+.axis {
+  font: 10px sans-serif;
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.axis text {
+  -webkit-transition: fill-opacity 250ms linear;
+}
+
+.axis path {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis.top {
+  background-image: linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  top: 0px;
+  padding: 0 0 24px 0;
+}
+
+.axis.bottom {
+  background-image: linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  bottom: 0px;
+  padding: 24px 0 0 0;
+}
+
+.horizon {
+  border-bottom: solid 1px #000;
+  overflow: hidden;
+  position: relative;
+}
+
+.horizon {
+  border-top: solid 1px #000;
+  border-bottom: solid 1px #000;
+}
+
+.horizon + .horizon {
+  border-top: none;
+}
+
+.horizon canvas {
+  display: block;
+}
+
+.horizon .title,
+.horizon .value {
+  bottom: 0;
+  line-height: 30px;
+  margin: 0 6px;
+  position: absolute;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  white-space: nowrap;
+}
+
+.horizon .title {
+  left: 0;
+}
+
+.horizon .value {
+  right: 0;
+}
+
+.line {
+  background: #000;
+  z-index: 2;
+}
+
+</style>
+
+<script src="http://d3js.org/d3.v2.js?2.9.1"></script>
+<!-- <script src="http://square.github.com/cubism/cubism.v1.js?1.0.0"></script> -->
+<script src="dnaism.v1.js"></script>
+<body id="demo">
+<script>
+
+var context = dnaism.context()
+               .start(500)
+               .stop(20000)
+               .size(1280)
+               .chrm('Chr17')
+               .step(2);
+
+// Create the top and bottom axis
+d3.select("#demo").selectAll(".axis") // perform the selection of divs (axis class); they don't exists yet
+    .data(["top", "bottom"])          // datums: top and bottom
+  .enter().append("div")              // Each new element will be a div
+    .attr("class", function(d) { return d + " axis"; }) // assign class top|bottom + axis
+    // per each div element (top or bottom) run context.axis() which will add all the svg elements as necessary
+    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+
+// Create a new rule which is the vertical line that updates on mousemove.
+d3.select("body").append("div")
+    .attr("class", "rule")
+    .call(context.rule());
+// function.call(this, argument1, argument2, ...)
+// function = selection (div rule)
+// this     = context.rule()
+
+var source_bedfile = context.bedfile();
+
+var metrics = [
+    source_bedfile.metric("sample1.bed"),
+    source_bedfile.metric("sample2.bed"),
+    source_bedfile.metric("sample3.bed"),
+    source_bedfile.metric("sample4.bed"),
+    source_bedfile.metric("sample5.bed"),
+    source_bedfile.metric("sample6.bed"),
+    source_bedfile.metric("sample7.bed"),
+    source_bedfile.metric("sample8.bed"),
+    source_bedfile.metric("sample9.bed"),
+    source_bedfile.metric("sample10.bed"),
+    source_bedfile.metric("sample11.bed"),
+    source_bedfile.metric("sample12.bed"),
+    source_bedfile.metric("sample13.bed"),
+    source_bedfile.metric("sample14.bed"),
+    source_bedfile.metric("sample15.bed"),
+    source_bedfile.metric("sample16.bed"),
+    source_bedfile.metric("sample17.bed"),
+    source_bedfile.metric("sample18.bed"),
+    source_bedfile.metric("sample19.bed"),
+    source_bedfile.metric("sample20.bed"),
+    source_bedfile.metric("sample21.bed"),
+    source_bedfile.metric("sample22.bed"),
+    source_bedfile.metric("sample23.bed"),
+    source_bedfile.metric("sample24.bed"),
+    source_bedfile.metric("sample25.bed"),
+];
+
+
+// Create all the divs that will contain the horizon charts
+d3.select("body").selectAll(".horizon")
+    //.data(["AAPL", "BIDU", "SINA", "GOOG", "MSFT", "YHOO", "ADBE", "REDF", "INSP", "IACI", "AVID", "CCUR", "DELL", "DGII", "HPQ", "SGI", "SMCI", "SNDK", "SYNA"].map(stock))
+    // For generating the datums pull the csv files from the server (check the stock function)
+    //.data(["Sample1", "Sample2", "Sample3", "Sample4"].map(stock))
+    //.data(["Sample1", "Sample4"].map(stock))
+    .data(metrics)
+  .enter().insert("div", ".bottom") // Instead of append, insert the new elements (divs) before the .bottom divs
+    .attr("class", "horizon")
+  .call(context.horizon() // Create all the necessary elements within the div to visualize a horizon of our metric
+    .format(d3.format(".2"))); // format current value of the metric
+
+// When we are over any of the charts, display the value of each of the metrics at the locations
+// where the mouse is pointing at
+context.on("focus", function(i) {
+  d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
+});
+
+// Typically your metrics will be coming from a backend server (cube and graphite are
+// currently suported)
+/* Format of the csv stocks:
+Date,Open,High,Low,Close,Volume
+1-May-12,584.90,596.76,581.23,582.13,21821359
+30-Apr-12,597.80,598.40,583.00,583.98,18076434
+*/
+
+function stock(name) {
+  var format = d3.time.format("%d-%b-%y");
+  // Create a new data source for the metric (company)
+  // The request function will receive start/stop/step and the callback func
+  // Notice that for the example we are going to ignore start/stop/step and just
+  // grab all the values for the metric.
+  if (false) {
+    return context.metric(function(start, stop, step, callback) {
+      // Request function: We have received a request to pull data for the metric (name)
+      d3.csv("stocks/" + name + ".csv", function(rows) {
+        // Extract only the columns that we need and put it in this format [ Date, Open_value ]
+        // Filter out if we don't have Open Value
+        // Older stock values first
+        rows = rows.map(function(d) { return [format.parse(d.Date), +d.Open]; }).filter(function(d) { return d[1]; }).reverse();
+        // Rows now is an array of arrays: [ [ Date, open_value ], .... ]
+        var date = rows[0][0], compare = rows[400][1], value = rows[0][1], values = [value];
+        rows.forEach(function(d) {
+          // grab all the values
+          while ((date = d3.time.day.offset(date, 1)) < d[0]) values.push(value);
+          values.push(value = (d[1] - compare) / compare);
+        });
+        callback(null, values.slice(-context.size()));
+      });
+    }, name);
+  } else {
+    return context.metric(function(start, stop, chrm, step, callback) {
+      var values = [], i;
+
+      start = +start;
+      stop = +stop;
+
+      while (start < stop) {
+        values.push(start);
+        start += step;
+      }
+
+      callback(null, values.slice(-context.size()));
+    }, name);
+  }
+}
+
+
+
+
+</script>
+
