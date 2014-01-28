@@ -8,9 +8,9 @@ time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts.
 In time-series data your metrics change over time, with DNA it changes
 over genomic coordinates (e.g. `chr17:45000`).
 
-### Basic example (Simulated data)
+### Basic example (Simulated data; Check below for an example with real data)
 
-Here is a screenshot of DNAism visualizing a region of simulated random data
+Here is a screen shot of DNAism visualizing a region of simulated random data
 for 23+ samples.  The details of how these files are generated is
 [here](https://github.com/drio/dnaism/blob/master/example/depth/build.sh).
 Basically a bunch of [Bed](https://genome.ucsc.edu/FAQ/FAQformat.html#format1)
@@ -42,7 +42,7 @@ Chr17   509     509     97
 You can look in the
 [template](https://github.com/drio/dnaism/blob/master/example/depth/index.template.html)'s
 code to see how we use DNAism to load the data. It is very similar to cubism
-with minor changes in the creation of the context and the definion of the
+with minor changes in the creation of the context and the definition of the
 metrics:
 
 ```js
@@ -83,8 +83,8 @@ bottom we have the region of the genome we are visualizing.
 We can appreciate the consistency in read depth across the majority of the samples
 (Some of them have a lower read depth across the whole genome).
 
-Also, there are small intervals where the read depth is very low, and that is also consistent
-across all the samples.
+Also, there are small intervals where the read depth is very low, and that is
+also consistent across all the samples.
 
 
 ### Future Work
