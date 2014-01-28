@@ -96,8 +96,8 @@ also consistent across all the samples.
 Currently we have only one source
 ([bedfile.js](https://github.com/drio/dnaism/blob/master/src/bedfile.js)). This
 source is enough to expose the usefulness of DNAism but it is not very
-practical since we are loading the whole bed files in memory.
+practical as we are loading the whole bed files in the browser's memory.
 
-I will be releasing soon a version of this source that works against a backend
-server. The server will do all the heavy computations and send fewer, already
-processed data points back to the client.
+I am working on a new source that works against a backend server. The server
+will do all the heavy computations and send fewer, already processed data
+points back to the client.
