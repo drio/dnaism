@@ -1,5 +1,7 @@
 ### DNAism
 
+#### Intro
+
 DNAism is a modified version of [Cubism](http://square.github.io/cubism/) aimed
 to work with genomic data.
 
@@ -8,7 +10,9 @@ time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts.
 In time-series data your metrics change over time, with DNA it changes
 over genomic coordinates (e.g. `chr17:45000`).
 
-### Basic example (Simulated data; Check below for an example with real data)
+#### Basic example (Simulated data)
+
+NOTE: Example with real data [here](https://github.com/drio/dnaism#real-data-show-me-the-money).
 
 Here is a screen shot of DNAism visualizing a region of simulated random data
 for 23+ samples.  The details of how these files are generated is
@@ -67,7 +71,7 @@ var metrics = [
 ```
 
 
-### Real data (Show me the money!)
+#### Real data (Show me the money!)
 
 Here is another example, this time with real data. We computed the
 [read depth](http://en.wikipedia.org/wiki/Deep_sequencing) across
@@ -87,7 +91,7 @@ Also, there are small intervals where the read depth is very low, and that is
 also consistent across all the samples.
 
 
-### Future Work
+#### Future Work
 
 Currently we have only one source
 ([bedfile.js](https://github.com/drio/dnaism/blob/master/src/bedfile.js)). This
