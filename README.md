@@ -75,7 +75,7 @@ Here is another example, this time with real data. We computed the
 (30x coverage). As with the simulated data, we use the bedfile source to access
 the data. Here is a screen shot:
 
-![](http://f.cl.ly/items/0629460e042F2Y3i1U1c/Screen%20Shot%202014-01-28%20at%2010.25.21%20AM.png)
+![](http://f.cl.ly/items/2P151B003x0P0y3O2Q3o/Screen%20Shot%202014-01-28%20at%2010.46.57%20AM.png)
 
 The id of the sample is shown at the beginning of each chart. At the top and
 bottom we have the region of the genome we are visualizing.
