@@ -128,9 +128,6 @@ d3.select("#demo").selectAll(".axis") // perform the selection of divs (axis cla
 d3.select("body").append("div")
     .attr("class", "rule")
     .call(context.rule());
-// function.call(this, argument1, argument2, ...)
-// function = selection (div rule)
-// this     = context.rule()
 
 var source_bedfile = context.bedfile();
 
@@ -143,10 +140,6 @@ var metrics = [
 
 // Create all the divs that will contain the horizon charts
 d3.select("body").selectAll(".horizon")
-    //.data(["AAPL", "BIDU", "SINA", "GOOG", "MSFT", "YHOO", "ADBE", "REDF", "INSP", "IACI", "AVID", "CCUR", "DELL", "DGII", "HPQ", "SGI", "SMCI", "SNDK", "SYNA"].map(stock))
-    // For generating the datums pull the csv files from the server (check the stock function)
-    //.data(["Sample1", "Sample2", "Sample3", "Sample4"].map(stock))
-    //.data(["Sample1", "Sample4"].map(stock))
     .data(metrics)
   .enter().insert("div", ".bottom") // Instead of append, insert the new elements (divs) before the .bottom divs
     .attr("class", "horizon")
@@ -158,58 +151,6 @@ d3.select("body").selectAll(".horizon")
 context.on("focus", function(i) {
   d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
 });
-
-// Typically your metrics will be coming from a backend server (cube and graphite are
-// currently suported)
-/* Format of the csv stocks:
-Date,Open,High,Low,Close,Volume
-1-May-12,584.90,596.76,581.23,582.13,21821359
-30-Apr-12,597.80,598.40,583.00,583.98,18076434
-*/
-
-function stock(name) {
-  var format = d3.time.format("%d-%b-%y");
-  // Create a new data source for the metric (company)
-  // The request function will receive start/stop/step and the callback func
-  // Notice that for the example we are going to ignore start/stop/step and just
-  // grab all the values for the metric.
-  if (false) {
-    return context.metric(function(start, stop, step, callback) {
-      // Request function: We have received a request to pull data for the metric (name)
-      d3.csv("stocks/" + name + ".csv", function(rows) {
-        // Extract only the columns that we need and put it in this format [ Date, Open_value ]
-        // Filter out if we don't have Open Value
-        // Older stock values first
-        rows = rows.map(function(d) { return [format.parse(d.Date), +d.Open]; }).filter(function(d) { return d[1]; }).reverse();
-        // Rows now is an array of arrays: [ [ Date, open_value ], .... ]
-        var date = rows[0][0], compare = rows[400][1], value = rows[0][1], values = [value];
-        rows.forEach(function(d) {
-          // grab all the values
-          while ((date = d3.time.day.offset(date, 1)) < d[0]) values.push(value);
-          values.push(value = (d[1] - compare) / compare);
-        });
-        callback(null, values.slice(-context.size()));
-      });
-    }, name);
-  } else {
-    return context.metric(function(start, stop, chrm, step, callback) {
-      var values = [], i;
-
-      start = +start;
-      stop = +stop;
-
-      while (start < stop) {
-        values.push(start);
-        start += step;
-      }
-
-      callback(null, values.slice(-context.size()));
-    }, name);
-  }
-}
-
-
-
 
 </script>
 
