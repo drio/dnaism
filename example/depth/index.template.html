@@ -115,16 +115,13 @@ var context = dnaism.context()
                .chrm('{{chrm}}')
                .step({{step}});
 
-// Create the top and bottom axis
-d3.select("#demo").selectAll(".axis") // perform the selection of divs (axis class); they don't exists yet
-    .data(["top", "bottom"])          // datums: top and bottom
-  .enter().append("div")              // Each new element will be a div
-    .attr("class", function(d) { return d + " axis"; }) // assign class top|bottom + axis
-    // per each div element (top or bottom) run context.axis() which will add all the svg elements as necessary
+d3.select("#demo").selectAll(".axis")
+    .data(["top", "bottom"])
+  .enter().append("div")
+    .attr("class", function(d) { return d + " axis"; })
     .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 
 
-// Create a new rule which is the vertical line that updates on mousemove.
 d3.select("body").append("div")
     .attr("class", "rule")
     .call(context.rule());
@@ -138,16 +135,13 @@ var metrics = [
 ];
 
 
-// Create all the divs that will contain the horizon charts
 d3.select("body").selectAll(".horizon")
     .data(metrics)
-  .enter().insert("div", ".bottom") // Instead of append, insert the new elements (divs) before the .bottom divs
+  .enter().insert("div", ".bottom")
     .attr("class", "horizon")
-  .call(context.horizon() // Create all the necessary elements within the div to visualize a horizon of our metric
-    .format(d3.format(".2"))); // format current value of the metric
+  .call(context.horizon()
+    .format(d3.format(".2")));
 
-// When we are over any of the charts, display the value of each of the metrics at the locations
-// where the mouse is pointing at
 context.on("focus", function(i) {
   d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
 });
