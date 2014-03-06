@@ -92,9 +92,11 @@ also consistent across all the samples.
 
 #### Snp density
 
-Here is another example, this time showing snp 
-[density](http://f.cl.ly/items/0o321p3L0r1r3G0S0w38/Screen%20Shot%202014-03-04%20at%2012.59.18%20PM.png) 
-across 20 WGS samples for chromosome 1.
+Here is another example, this time showing snp density
+across 20 Rhesus Macaque samples on chromosome 1.
+
+![density](http://f.cl.ly/items/0o321p3L0r1r3G0S0w38/Screen%20Shot%202014-03-04%20at%2012.59.18%20PM.png) 
+
 
 #### Future Work
 
