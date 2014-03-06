@@ -90,6 +90,11 @@ We can appreciate the consistency in read depth across the majority of the sampl
 Also, there are small intervals where the read depth is very low, and that is
 also consistent across all the samples.
 
+#### Snp density
+
+Here is another example, this time showing snp 
+[density](http://f.cl.ly/items/0o321p3L0r1r3G0S0w38/Screen%20Shot%202014-03-04%20at%2012.59.18%20PM.png) 
+across 20 WGS samples for chromosome 1.
 
 #### Future Work
 
