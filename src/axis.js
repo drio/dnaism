@@ -6,6 +6,7 @@ dnaism_contextPrototype.axis = function() {
 
   //var format = d3.format("s");
   var format = function(d) { return context.chrm() + ":" + d3.format("s")(d); };
+  var format_log = function(d) { return context.chrm() + ":" + Math.round(d); };
 
   function axis(selection) {
     var id = ++dnaism_id,
@@ -19,12 +20,20 @@ dnaism_contextPrototype.axis = function() {
         .attr("transform", "translate(0," + (axis_.orient() === "top" ? 27 : 4) + ")")
         .call(axis_);
 
+    context.on("change.axis-" + id, function() {
+      g.call(axis_);
+      if (!tick) tick = d3.select(g.node().appendChild(g.selectAll("text").node().cloneNode(true)))
+          .style("display", "none")
+          .text(null);
+    });
+
     context.on("focus.axis-" + id, function(i) {
       if (tick) {
         if (i == null) {
           tick.style("display", "none");
           g.selectAll("text").style("fill-opacity", null);
         } else {
+          console.log(format_log(scale.invert(i)));
           tick.style("display", null).attr("x", i).text(format(scale.invert(i)));
           var dx = tick.node().getComputedTextLength() + 6;
           g.selectAll("text").style("fill-opacity", function(d) { return Math.abs(scale(d) - i) < dx ? 0 : 1; });
