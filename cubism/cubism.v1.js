@@ -1,5 +1,7 @@
 (function(exports){
 var cubism = exports.cubism = {version: "1.4.0"};
+
+console.log("starting ...");
 var cubism_id = 0;
 function cubism_identity(d) { return d; }
 cubism.option = function(name, defaultValue) {
@@ -661,7 +663,6 @@ cubism_contextPrototype.rule = function() {
 
       function change(start, stop) {
         var values = [];
-
         for (var i = 0, n = context.size(); i < n; ++i) {
           if (metric_.valueAt(i)) {
             values.push(i);

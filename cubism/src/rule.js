@@ -19,7 +19,6 @@ cubism_contextPrototype.rule = function() {
 
       function change(start, stop) {
         var values = [];
-
         for (var i = 0, n = context.size(); i < n; ++i) {
           if (metric_.valueAt(i)) {
             values.push(i);
