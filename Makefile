@@ -1,7 +1,7 @@
 JS_COMPILER = ./node_modules/uglify-js/bin/uglifyjs
 
-#all: dnaism.v1.min.js
 all: dnaism.v1.js
+#all: dnaism.v1.min.js
 
 dnaism.v1.js: \
 	src/dnaism.js \
@@ -13,6 +13,7 @@ dnaism.v1.js: \
 	src/axis.js \
 	src/rule.js \
 	src/bedfile.js \
+	src/bedserver.js \
 	Makefile
 
 %.min.js: %.js Makefile
