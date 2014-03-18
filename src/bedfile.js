@@ -9,31 +9,31 @@ dnaism_contextPrototype.bedfile = function() {
       d3.text(file_name, function(contents) {
         var values = [],
             size = context.size(),
-            curr_locus = +start,
             interval_size = (stop-start)/size,
             int_mark, n_vals, sum;
 
-        console.log("  data:" + contents.length);
-        console.log("  start:" + start);
-        console.log("  stop:" + stop);
-        console.log("  step:" + step);
-        console.log("  chrm:" + chrm);
-        console.log("  i size:" + interval_size);
-
-        // TODO: use step
-        // Not used because complicates the logic. We will end up using
-        // a backend server anyway which will facilitate the implementation
-        // of these. In the server, we can read from and indexed version of
-        // the bed file from disk.
         int_mark = start + interval_size;
         n_vals = 0;
         sum = 0;
         d3.tsv.parseRows(contents, function(a_row) {
+          /*
+           * This is buggy: you may jump windows without assigning a value.
+           * Alterantive:
+           * while coor < int_mark
+           *    store coor, val
+           * if coor within next window
+           *    compute average and store in array
+           *    N = 1
+           * else
+           *    save 0 in all the windows that have no value
+           *    N = ?
+           * update current in_mark (int_mark + w_size*N)
+           */
           var _chrm = a_row[0],
-              locus = +a_row[1],
+              coor = +a_row[1],
               value = +a_row[3];
-          if (chrm === _chrm && locus >= start && locus <= stop) {
-            if (locus < int_mark) {
+          if (chrm === _chrm && coor >= start && coor <= stop) {
+            if (coor < int_mark) {
               sum += value;
               n_vals += 1;
             } else {
