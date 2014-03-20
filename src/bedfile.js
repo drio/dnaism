@@ -10,7 +10,7 @@ dnaism_contextPrototype.bedfile = function() {
         var sum = 0, i;
         for (i=0; i<arr.length; i++)
             sum = sum + arr[i];
-        return sum/arr.length;
+        return +((sum/arr.length).toFixed(2));
     };
 
     source.metric = function(file_name) {
