@@ -1,60 +1,61 @@
-// The simplets source, a bed file
-dnaism_contextPrototype.bedfile = function() {
-  var source = {},
-      context = this;
+// vim: ts=4 expandtab:
 
-  source.metric = function(file_name) {
+/* The simplets source, a bed file */
+dnaism_contextPrototype.bedfile = function() {
+    var source = {},
+        context = this,
+        compute_average;
+
+    compute_average = function(arr) {
+        var sum = 0, i;
+        for (i=0; i<arr.length; i++)
+            sum = sum + arr[i];
+        return sum/arr.length;
+    };
+
+    source.metric = function(file_name) {
+
     return context.metric(function(start, stop, chrm, step, callback) {
 
-      d3.text(file_name, function(contents) {
-        var values = [],
-            size = context.size(),
-            interval_size = (stop-start)/size,
-            int_mark, n_vals, sum;
+        d3.text(file_name, function(contents) {
+            var final_data_points = [],
+                size = context.size(),
+                interval_size = (stop-start)/size,
+                int_mark = start + interval_size,
+                sum = 0,
+                int_vals = [],
+                _n_plus;
 
-        int_mark = start + interval_size;
-        n_vals = 0;
-        sum = 0;
-        d3.tsv.parseRows(contents, function(a_row) {
-          /*
-           * This is buggy: you may jump windows without assigning a value.
-           * Alterantive:
-           * while coor < int_mark
-           *    store coor, val
-           * if coor within next window
-           *    compute average and store in array
-           *    N = 1
-           * else
-           *    save 0 in all the windows that have no value
-           *    N = ?
-           * update current in_mark (int_mark + w_size*N)
-           */
-          var _chrm = a_row[0],
-              coor = +a_row[1],
-              value = +a_row[3];
-          if (chrm === _chrm && coor >= start && coor <= stop) {
-            if (coor < int_mark) {
-              sum += value;
-              n_vals += 1;
-            } else {
-              values.push(n_vals === 0 ? 0 : sum/n_vals);
-              sum = value;
-              n_vals = 1;
-              int_mark = int_mark + interval_size;
-            }
-          }
-          return null;
+            d3.tsv.parseRows(contents, function(a_row) {
+                var _chrm = a_row[0],
+                    coor  = +a_row[1],
+                    value = +a_row[3];
+
+                if (chrm === _chrm && coor < int_mark) {
+                    int_vals.push(value);
+                }
+                else {
+                    if (coor < int_mark + interval_size) {
+                        final_data_points.push(compute_average(int_vals));
+                        int_mark = int_mark + interval_size;
+                    }
+                    else {
+                        _n_plus = ~~((coor - int_mark) / interval_size);
+                        int_mark += (interval_size * _n_plus);
+                        while (_n_plus--)
+                          final_data_points.push(0);
+                    }
+                    int_vals = [value];
+                }
+                return null;
+            });
+
+            // Data points ready to send back to dnaism engine
+            callback(null, final_data_points.slice(-context.size()));
         });
 
-        console.log("values.length =  " + values.length);
+      }, file_name);
+    };
 
-        callback(null, values.slice(-context.size()));
-      });
-
-
-    }, file_name);
-  };
-
-  return source;
+    return source;
 };
-
