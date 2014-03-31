@@ -10,6 +10,9 @@ time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts.
 In time-series data your metrics change over time, with DNA it changes
 over genomic coordinates (e.g. `chr17:45000`).
 
+Head to the [wiki](https://github.com/drio/dnaism/wiki) for more details on the API reference (still 
+a work in progress).
+
 #### Basic example (Simulated data)
 
 NOTE: Example with real data [here](https://github.com/drio/dnaism#real-data-show-me-the-money).
