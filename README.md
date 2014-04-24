@@ -24,7 +24,7 @@ NOTE: Example with real data [here](https://github.com/drio/dnaism#real-data-sho
 
 Here is a screen shot of DNAism visualizing a region of simulated random data
 for 23+ samples.  The details of how these files are generated is
-[here](https://github.com/drio/dnaism/blob/master/example/depth/build.sh).
+[here](https://github.com/drio/dnaism/blob/master/example/simulated/build.sh).
 Basically a bunch of [Bed](https://genome.ucsc.edu/FAQ/FAQformat.html#format1)
 files are generated for a small region of a genome. It introduces constant
 values on certain intervals to allow visual validation. Then, we tell DNAism to
