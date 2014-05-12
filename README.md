@@ -10,13 +10,21 @@ time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts.
 In time-series data your metrics change over time, with DNA it changes
 over genomic coordinates (e.g. `chr17:45000`).
 
+Head to the [wiki](https://github.com/drio/dnaism/wiki) for more details on the API reference (still 
+a work in progress).
+
+There are two other projects that go together with DNAism: [bedserver](https://github.com/drio/bedserver) and
+[bedbrowser](https://github.com/drio/bedbrowser). Bedserver is a lightweight backend for the 
+bedserver source (more on that below) and bedbrowser is a web app example that uses DNAism and bedserver.
+
+
 #### Basic example (Simulated data)
 
 NOTE: Example with real data [here](https://github.com/drio/dnaism#real-data-show-me-the-money).
 
 Here is a screen shot of DNAism visualizing a region of simulated random data
 for 23+ samples.  The details of how these files are generated is
-[here](https://github.com/drio/dnaism/blob/master/example/depth/build.sh).
+[here](https://github.com/drio/dnaism/blob/master/example/simulated/build.sh).
 Basically a bunch of [Bed](https://genome.ucsc.edu/FAQ/FAQformat.html#format1)
 files are generated for a small region of a genome. It introduces constant
 values on certain intervals to allow visual validation. Then, we tell DNAism to
@@ -97,14 +105,3 @@ across 20 Rhesus Macaque samples on chromosome 1.
 
 ![density](http://f.cl.ly/items/0o321p3L0r1r3G0S0w38/Screen%20Shot%202014-03-04%20at%2012.59.18%20PM.png) 
 
-
-#### Future Work
-
-Currently we have only one source
-([bedfile.js](https://github.com/drio/dnaism/blob/master/src/bedfile.js)). This
-source is enough to expose the usefulness of DNAism but it is not very
-practical as we are loading the whole bed files in the browser's memory.
-
-I am working on a new source that works against a backend server. The server
-will do all the heavy computations and send fewer, already processed data
-points back to the client.
