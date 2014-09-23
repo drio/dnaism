@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  margin: 30px auto;
+  width: 1280px;
+  position: relative;
+}
+
+header {
+  padding: 6px 0;
+}
+
+.group {
+  margin-bottom: 1em;
+}
+
+.axis {
+  font: 10px sans-serif;
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.axis text {
+  -webkit-transition: fill-opacity 250ms linear;
+}
+
+.axis path {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis.top {
+  background-image: linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  top: 0px;
+  padding: 0 0 24px 0;
+}
+
+.axis.bottom {
+  background-image: linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  bottom: 0px;
+  padding: 24px 0 0 0;
+}
+
+.horizon {
+  border-bottom: solid 1px #000;
+  overflow: hidden;
+  position: relative;
+}
+
+.horizon {
+  border-top: solid 1px #000;
+  border-bottom: solid 1px #000;
+}
+
+.horizon + .horizon {
+  border-top: none;
+}
+
+.horizon canvas {
+  display: block;
+}
+
+.horizon .title,
+.horizon .value {
+  bottom: 0;
+  line-height: 30px;
+  margin: 0 6px;
+  position: absolute;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  white-space: nowrap;
+}
+
+.horizon .title {
+  left: 0;
+}
+
+.horizon .value {
+  right: 0;
+}
+
+.line {
+  background: #000;
+  z-index: 2;
+}
+
+</style>
+
+<script src="http://d3js.org/d3.v2.js?2.9.1"></script>
+<!-- <script src="http://square.github.com/cubism/cubism.v1.js?1.0.0"></script> -->
+<script src="dnaism.v1.js"></script>
+<body id="demo">
+<script>
+
+var context = dnaism.context()
+               .start(1)
+               .stop(228260000)
+               .size(1280)
+               .chrm('Chr1')
+               .step(2);
+
+d3.select("#demo").selectAll(".axis")
+    .data(["top", "bottom"])
+  .enter().append("div")
+    .attr("class", function(d) { return d + " axis"; })
+    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+
+d3.select("body").append("div")
+    .attr("class", "rule")
+    .call(context.rule());
+
+var source_bedfile = context.bedfile();
+
+var metrics = [
+    source_bedfile.metric("18277.YNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("19466.YNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("34753.YNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("23138.ONPRC.Indian.chr1.bed"),
+    source_bedfile.metric("27347.ONPRC.Indian.chr1.bed"),
+    source_bedfile.metric("35044.ONPRC.Indian.chr1.bed"),
+    source_bedfile.metric("30110.WNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("30119.WNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("24898.WNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("34595.NEPRC.Indian.chr1.bed"),
+    source_bedfile.metric("34597.NEPRC.Indian.chr1.bed"),
+    source_bedfile.metric("34598.NEPRC.Indian.chr1.bed"),
+    source_bedfile.metric("35087.CNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("35088.CNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("35865.Tulane.Indian.chr1.bed"),
+    source_bedfile.metric("35866.Tulane.Indian.chr1.bed"),
+    source_bedfile.metric("35973.SNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("35976.SNPRC.Indian.chr1.bed"),
+    source_bedfile.metric("25P.Cayo.Indian.chr1.bed"),
+    source_bedfile.metric("37N.Cayo.Indian.chr1.bed"),
+];
+
+d3.select("body").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+
+context.on("focus", function(i) {
+  d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
+});
+
+</script>
+
