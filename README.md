@@ -10,12 +10,28 @@ time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts.
 In time-series data your metrics change over time, with DNA it changes
 over genomic coordinates (e.g. `chr17:45000`).
 
-Head to the [wiki](https://github.com/drio/dnaism/wiki) for more details on the API reference (still 
+Head to the [wiki](https://github.com/drio/dnaism/wiki) for more details on the API reference (still
 a work in progress).
 
 There are two other projects that go together with DNAism: [bedserver](https://github.com/drio/bedserver) and
-[bedbrowser](https://github.com/drio/bedbrowser). Bedserver is a lightweight backend for the 
+[bedbrowser](https://github.com/drio/bedbrowser). Bedserver is a lightweight backend for the
 bedserver source (more on that below) and bedbrowser is a web app example that uses DNAism and bedserver.
+
+#### How do I install DNAism?
+
+DNAism is a Javascript library and it is designed to be used in modern browser environments.
+You simply include the latest version of the library's code ([raw](https://raw.githubusercontent.com/drio/dnaism/master/dnaism.v1.js)
+ or [minimized](https://raw.githubusercontent.com/drio/dnaism/master/dnaism.v1.min.js)) in your
+web app. You can also copy the contents of that file to your local disk and load directly
+from there. Since DNAism uses [D3](http://d3js.org/), we have to also include that library prior
+to load DNAism:
+
+```js
+...
+<script src="http://d3js.org/d3.v2.min.js" charset="utf-8"></script>
+<script src="dnaism.v1.js"></script>
+...
+```
 
 
 #### Basic example (Simulated data)
@@ -103,5 +119,5 @@ also consistent across all the samples.
 Here is another example, this time showing snp density
 across 20 Rhesus Macaque samples on chromosome 1.
 
-![density](http://f.cl.ly/items/0o321p3L0r1r3G0S0w38/Screen%20Shot%202014-03-04%20at%2012.59.18%20PM.png) 
+![density](http://f.cl.ly/items/0o321p3L0r1r3G0S0w38/Screen%20Shot%202014-03-04%20at%2012.59.18%20PM.png)
 
