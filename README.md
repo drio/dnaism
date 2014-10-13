@@ -1,5 +1,10 @@
 ### DNAism
 
+#### Questions, patches, comments, feedback?
+
+Please open a [ticket](https://github.com/drio/dnaism/issues) and we will
+be happy to help you.
+
 #### Intro
 
 DNAism is a modified version of [Cubism](http://square.github.io/cubism/) aimed
@@ -30,10 +35,10 @@ That means you should be familiar with [CSS](https://developer.mozilla.org/en-US
 
 The library uses [D3](http://d3js.org/) to interact with the
 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model).
-Understanding of D3 would be very valuable, specially if you are planning on
+D3 Understanding would be very valuable, specially if you are planning on
 going beyond the basics.
 
-#### What resources does this library consumes?
+#### What resources does this library consume?
 
 It is not CPU intensive. Any current laptop or workstation will render the
 visualizations without trouble.
