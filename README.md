@@ -17,6 +17,38 @@ There are two other projects that go together with DNAism: [bedserver](https://g
 [bedbrowser](https://github.com/drio/bedbrowser). Bedserver is a lightweight backend for the
 bedserver source (more on that below) and bedbrowser is a web app example that uses DNAism and bedserver.
 
+#### What type of skills I need to use this software?
+
+In the bioinformatics community we are more used to run standalone applications.
+Those run directly in your Operating System. DNAism is a javascript library.
+Javascript interpreters run in browsers which in turn run in the Operating System.
+
+To get the most of this library you have to be comfortable writing web applications.
+That means you should be familiar with [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS),
+[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) and
+[Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+
+The library uses [D3](http://d3js.org/) to interact with the
+[DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model).
+Understanding of D3 would be very valuable, specially if you are planning on
+going beyond the basics.
+
+#### What resources does this library consumes?
+
+It is not CPU intensive. Any current laptop or workstation will render the
+visualizations without trouble.
+
+Data has to be loaded in the browser. If you choose to load all the visualization
+data points in memory your system (depending of the memory available and the
+region your are visualizing)
+may start [Thrashing](http://en.wikipedia.org/wiki/Thrashing_(computer_science)).
+To avoid that you should preprocess the regions you are visualizing and only
+send to the browser the data points used for rendering. That processing can
+happen prior to run the visualization or in realtime using the bedserver source.
+You can also build your own source to target your own needs.
+
+
+
 #### How do I install DNAism?
 
 DNAism is a Javascript library and it is designed to be used in modern browser environments.
