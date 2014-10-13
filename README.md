@@ -35,7 +35,7 @@ That means you should be familiar with [CSS](https://developer.mozilla.org/en-US
 
 The library uses [D3](http://d3js.org/) to interact with the
 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model).
-D3 Understanding would be very valuable, specially if you are planning on
+D3 experience would be very valuable, specially if you are planning on
 going beyond the basics.
 
 #### What resources does this library consume?
