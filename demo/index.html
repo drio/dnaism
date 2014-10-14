@@ -1,0 +1,313 @@
+<!doctype html>
+<!-- vim: set ts=2 sw=2: -->
+
+<style> @import url('style.css'); </style>
+
+<script src="http://d3js.org/d3.v2.js?2.9.1"></script>
+<script src="./dnaism.v1.min.js"></script>
+
+<head>
+  <title>DNAism demo.</title>
+</head>
+
+<h1>DNAism, the demo.</h1>
+
+
+<h2><a href="#what">>></a>What is this?</h2>
+
+<p>This document walks you through the different steps necessary to build a
+visualization using DNAism. You should be familiar with the
+DOM, CSS, HTML and <a href="http://d3js.org">D3</a>. You can read
+more about the first three technologies <a href="https://developer.mozilla.org/en-US/docs/Web">here</a>.
+
+<p>In this example we will use horizon charts to visualize the read depth for a particular
+genome region across multiple <a href="Next Gen">http://en.wikipedia.org/wiki/DNA_sequencing</a>
+samples. Our data is in <a href="http://genome.ucsc.edu/FAQ/FAQformat.html">BED</a> format:
+
+<pre>
+$ ls *.bed
+18277.bed       23138.bed       30158.bed       34598.bed  ...
+19466.bed       27347.bed       32510.bed       34600.bed  ...
+
+$ head -3 18277.bed
+Chr17   1100003 1100004 36
+Chr17   1100004 1100005 35
+Chr17   1100005 1100006 36
+
+$ tail -3 18277.bed
+Chr17   1199991 1199992 41
+Chr17   1199992 1199997 40
+Chr17   1199997 1200000 41
+</pre>
+
+<p>These bed files live in the server, in the same location of the web files
+that contain the code of the article you are reading.
+
+<h2><a href="#requirements">>></a>Software needed.</h2>
+
+<p> We will start with a basic html document that loads DNAism and its
+only dependency (D3). In this basic document we also load the css styles
+for the different elements that DNAism will be inserting in the document
+as we progress in the visualization. You don't have to fully understand
+those in order to take advantage of this library.
+
+<pre>
+BASIC html here
+</pre>
+
+<p> Maybe more comments about what we have in the html document.
+
+
+
+<h2><a href="#context">>></a>Creating a context.</h2>
+
+<p> Now we will start adding Javascript code to create the visualization. This
+code will use different DNAism components, starting with <pre>context()</pre>.
+
+<pre>
+var context = dnaism.context()
+               .start(1100000)
+               .stop(1200000)
+               .size(800)
+               .chrm('Chr17')
+               .step(2);
+</pre>
+
+<p> Here, we define the context of the region of the genome we are interested
+in exploring. We do that by setting the chromosome() and the start() and stop()
+position of the region of interest. In addition we have to specify the space we
+have to visualize the data, in pixels. Finally the step() method allows us to
+control the resolution (FIXMEXXXXXXXXXXX).
+
+<p> We haven't rendered any web element yet, we are just telling DNAism what
+region we are interested on.
+
+
+
+<h2><a href="#source">>></a>Sources.</h2>
+
+<p> Next we define a source. The interface of a source component defines a
+contract that context uses to requests data for a specific region. All the
+logic on how to retrieve the data is encapsulated in that component.
+
+<pre>
+var source_bedfile = context.bedfile();
+</pre>
+
+<p> For this example we are using the <pre>bedfile()</pre> source. This source's logic
+will request whole files to the server. Notice we haven't yet specified what
+files we want to load, we do that with the next component <pre>metric()</pre>.
+
+
+<h2><a href="#metrics">>></a>Metrics.</h2>
+
+<p> Now we can use the source we have just created to instantiate as many metrics as
+we want. Those metrics will point to a specific file (or sample). We will create
+only one (sample 18277). We store the metric in an array so we can add
+more metrics later.
+
+<pre>
+metric = [ source_bedfile.metric("18277.bed") ];
+</pre>
+
+<p> Now DNAism knows how to retrieve data for that particular sample. We can now
+start visualizing the data.
+
+
+
+<h2><a href="#horizon">>></a>Creating the horizon chart.</h2>
+
+<p> Next we define a source. The interface of a source defines a contract that
+context uses to requests data for a specific region. All the logic on how to
+retrieve the data is encapsulated in that component.
+
+<pre>
+d3.select("body").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+</pre>
+
+<p>This can be a daunting snippet for those not familiar with D3 and
+Javascript. It is a fundamental
+<a href="http://bost.ocks.org/mike/bar/">pattern</a> in D3.
+At a high level, what we are doing is selecting the element where we
+will be drawing the horizon chart (or charts if there is more than
+one sample we are working on). When D3 calls <pre>context.horizon()</pre>
+the necessary visual elements for the sample will be added to the document.
+
+<p> And here you have the result:
+
+<div id="single_horizon">
+</div>
+
+<script>
+var context = dnaism.context()
+               .start(1100000)
+               .stop(1200000)
+               .size(800)
+               .chrm('Chr17')
+               .step(2);
+
+var source_bedfile = context.bedfile();
+
+var metrics = [ source_bedfile.metric("18277.bed")] ;
+
+d3.select("#single_horizon").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+</script>
+
+<p> Now we can explore the read depth for that regions in more samples,
+just by adding them to the metrics array:
+
+<pre>
+var metrics = [
+  source_bedfile.metric("18277.bed"),
+  source_bedfile.metric("19466.bed"),
+  source_bedfile.metric("23138.bed"),
+];
+</pre>
+
+<div id="three_samples"> </div>
+
+<script>
+var context = dnaism.context()
+               .start(1100000)
+               .stop(1200000)
+               .size(800)
+               .chrm('Chr17')
+               .step(2);
+
+var source_bedfile = context.bedfile();
+
+var metrics = [
+  source_bedfile.metric("18277.bed"),
+  source_bedfile.metric("19466.bed"),
+  source_bedfile.metric("23138.bed"),
+];
+
+d3.select("#three_samples").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+</script>
+
+<p> We can use the axis component now to help us determine what part
+of the genome we are exploring:
+
+<div id="with_axis"> </div>
+
+<script>
+var context = dnaism.context()
+               .start(1100000)
+               .stop(1200000)
+               .size(800)
+               .chrm('Chr17')
+               .step(2);
+
+d3.select("#with_axis").selectAll(".axis")
+    .data(["top", "bottom"])
+  .enter().append("div")
+    .attr("class", function(d) { return d + " axis"; })
+    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+var source_bedfile = context.bedfile();
+
+var metrics = [
+  source_bedfile.metric("18277.bed"),
+  source_bedfile.metric("19466.bed"),
+  source_bedfile.metric("23138.bed"),
+];
+
+d3.select("#with_axis").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+</script>
+
+
+
+<p> And finally, we can add a rule to help us navigate our dataset:
+
+<div id="with_rule"> </div>
+
+<script>
+var context = dnaism.context()
+               .start(1100000)
+               .stop(1200000)
+               .size(800)
+               .chrm('Chr17')
+               .step(2);
+
+d3.select("#with_rule").selectAll(".axis")
+    .data(["top", "bottom"])
+  .enter().append("div")
+    .attr("class", function(d) { return d + " axis"; })
+    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+d3.select("body").append("div")
+    .attr("class", "rule")
+    .call(context.rule());
+
+var source_bedfile = context.bedfile();
+
+var metrics = [
+  source_bedfile.metric("18277.bed"),
+  source_bedfile.metric("19466.bed"),
+  source_bedfile.metric("23138.bed"),
+];
+
+d3.select("#with_rule").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+</script>
+
+<p> And here is how the final piece of code looks like:
+
+<pre>
+var context = dnaism.context()
+               .start(1100000)
+               .stop(1200000)
+               .size(800)
+               .chrm('Chr17')
+               .step(2);
+
+d3.select("#with_rule").selectAll(".axis")
+    .data(["top", "bottom"])
+  .enter().append("div")
+    .attr("class", function(d) { return d + " axis"; })
+    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+d3.select("body").append("div")
+    .attr("class", "rule")
+    .call(context.rule());
+
+var source_bedfile = context.bedfile();
+
+var metrics = [
+  source_bedfile.metric("18277.bed"),
+  source_bedfile.metric("19466.bed"),
+  source_bedfile.metric("23138.bed"),
+];
+
+d3.select("#with_rule").selectAll(".horizon")
+    .data(metrics)
+  .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+  .call(context.horizon()
+    .format(d3.format(".2")));
+
+</pre>
