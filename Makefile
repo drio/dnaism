@@ -33,10 +33,10 @@ test: dnaism.v1.js
 	@chmod 755 tests/*.js
 	tests/main.js
 
-demo: dnaism.v1.min.js
-	rsync -Lavz --delete $< demo/* apu:/usr/local/www/dnaism.davidr.io/public/
+site: dnaism.v1.min.js
+	rsync -Lavz --delete $< site/* apu:/usr/local/www/dnaism.davidr.io/public/
 
 clean:
 	rm -f dnaism.v1.js dnaism.v1.min.js
 
-.PHONY: demo
+.PHONY: site

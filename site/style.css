@@ -93,3 +93,9 @@ header {
   background: #000;
   z-index: 2;
 }
+
+.line-chart {
+    fill: none;
+    stroke: blue;
+    stroke-width: 1.5px;
+}
