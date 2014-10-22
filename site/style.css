@@ -1,3 +1,4 @@
+/* vim: set ts=2 sw=2: */
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   margin: 30px auto;
@@ -95,7 +96,13 @@ header {
 }
 
 .line-chart {
-    fill: none;
-    stroke: blue;
-    stroke-width: 1.5px;
+  fill: none;
+  stroke: blue;
+  stroke-width: 1.5px;
+}
+
+.baseline {
+  fill: none;
+  stroke: grey;
+  stroke-width: 1.5px;
 }

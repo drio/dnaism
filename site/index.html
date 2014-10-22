@@ -3,14 +3,16 @@
 
 <style> @import url('style.css'); </style>
 
-<script src="d3.js"></script>
-<script src="underscore-min.js"></script>
-<script src="dnaism.v1.min.js"></script>
+<script src="js/d3.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/dnaism.v1.min.js"></script>
+<script src="js/common.js"></script>
 
 <head>
   <title>DNAism: Horizon Charts for genomics.</title>
 </head>
 
+<section style="background:#fff">
 <h2><a href="#introduction">>></a>Introduction</h2>
 
 <p> Data visualization is an important method to extract value from
@@ -30,9 +32,12 @@ time series data using a visualization technique called Horizon Charts:
 
 <p> Our library, DNAism, modifies Cubism to work with genomic data sets
 instead of time.
+</section>
 
 
 
+
+<section style="background:#fff">
 
 <h2><a href="#horizon_charts"></a>Introducing Horizon Charts</h2>
 
@@ -40,7 +45,9 @@ Imagine we have a single variable we want to explore (stock data in this
 case). We could visualize it using a simple line chart:
 
 <div>
-<input id="slider" type="range" min="50" step="10" max="200" value="200"/><span id="slider_value">200</span>
+  <input id="slider" type="range" min="50" step="10" max="200" value="200"/>
+  <span>Height size = </span>
+  <span id="slider_value">200</span>
 </div>
 
 <div id="basic_line_chart"></div>
@@ -61,6 +68,10 @@ function viz_line_chart(data, w, h) {
         .x(function(d, i) { return x(i); })
         .y(function(d, i) { return y(d); });
 
+      baseline = d3.svg.line()
+        .x(function(d, i) { return x(i); })
+        .y(function(d) { return y(0); });
+
 
   y.domain(d3.extent(data, function(d) { return d; }));
   x.domain([0, data.length]);
@@ -75,10 +86,15 @@ function viz_line_chart(data, w, h) {
       .datum(data)
       .attr("class", "line-chart")
       .attr("d", line);
+
+  svg.append("path")
+      .datum(data)
+      .attr("class", "baseline")
+      .attr("d", baseline);
 }
 
-d3.tsv("/apple.tsv", function(data, error) {
-  var d = _.map(data, function(o) { return +o.Close; }),
+d3.json("data/unemployment.json", function(data, error) {
+  var d = common.rate_only(data),
       w = 800, h = 200;
 
   viz_line_chart(d, w, h);
@@ -92,8 +108,75 @@ d3.tsv("/apple.tsv", function(data, error) {
     });
 });
 </script>
+</section>
 
 
+
+
+<section style="background:#fff">
+  <style>
+
+  #horizon-controls {
+    position: relative;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  #horizon-bands {
+    position: absolute;
+    right: 0;
+  }
+
+  </style>
+
+  <div id="horizon-controls">
+    <input name="mode" type="radio" value="mirror" id="horizon-mode-mirror" checked><label for="horizon-mode-mirror"> Mirror</label>
+    <input name="mode" type="radio" value="offset" id="horizon-mode-offset"><label for="horizon-mode-offset"> Offset</label>
+    <span id="horizon-bands"><span id="horizon-bands-value">1</span> <button class="first">&#x2212;</button><button class="last">+</button></span>
+  </div>
+
+  <div id="horizon-chart"></div>
+  <script src="js/horizon.js"></script>
+
+  <script>
+
+  var width = 800,
+      height = 360;
+
+  var chart = d3.horizon()
+      .width(width)
+      .height(height)
+      .bands(1)
+      .mode("mirror")
+      .interpolate("basis");
+
+  var svg = d3.select("#horizon-chart").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+  d3.json("data/unemployment.json", function(data) {
+
+    data = common.prepare_employment(data);
+
+    // Render the chart.
+    svg.data([data]).call(chart);
+
+    // Enable mode buttons.
+    d3.selectAll("#horizon-controls input[name=mode]").on("change", function() {
+      svg.call(chart.duration(0).mode(this.value));
+    });
+
+    // Enable bands buttons.
+    d3.selectAll("#horizon-bands button").data([-1, 1]).on("click", function(d) {
+      var n = Math.max(1, chart.bands() + d);
+      d3.select("#horizon-bands-value").text(n);
+      svg.call(chart.duration(1000).bands(n).height(height / n));
+    });
+  });
+
+  </script>
+</section>
 
 
 
@@ -239,7 +322,7 @@ var context = dnaism.context()
 
 var source_bedfile = context.bedfile();
 
-var metrics = [ source_bedfile.metric("18277.bed")] ;
+var metrics = [ source_bedfile.metric("data/18277.bed")] ;
 
 d3.select("#single_horizon").selectAll(".horizon")
     .data(metrics)
@@ -273,9 +356,9 @@ var context = dnaism.context()
 var source_bedfile = context.bedfile();
 
 var metrics = [
-  source_bedfile.metric("18277.bed"),
-  source_bedfile.metric("19466.bed"),
-  source_bedfile.metric("23138.bed"),
+  source_bedfile.metric("data/18277.bed"),
+  source_bedfile.metric("data/19466.bed"),
+  source_bedfile.metric("data/23138.bed"),
 ];
 
 d3.select("#three_samples").selectAll(".horizon")
@@ -308,9 +391,9 @@ d3.select("#with_axis").selectAll(".axis")
 var source_bedfile = context.bedfile();
 
 var metrics = [
-  source_bedfile.metric("18277.bed"),
-  source_bedfile.metric("19466.bed"),
-  source_bedfile.metric("23138.bed"),
+  source_bedfile.metric("data/18277.bed"),
+  source_bedfile.metric("data/19466.bed"),
+  source_bedfile.metric("data/23138.bed"),
 ];
 
 d3.select("#with_axis").selectAll(".horizon")
@@ -348,9 +431,9 @@ d3.select("body").append("div")
 var source_bedfile = context.bedfile();
 
 var metrics = [
-  source_bedfile.metric("18277.bed"),
-  source_bedfile.metric("19466.bed"),
-  source_bedfile.metric("23138.bed"),
+  source_bedfile.metric("data/18277.bed"),
+  source_bedfile.metric("data/19466.bed"),
+  source_bedfile.metric("data/23138.bed"),
 ];
 
 d3.select("#with_rule").selectAll(".horizon")
@@ -384,9 +467,9 @@ d3.select("body").append("div")
 var source_bedfile = context.bedfile();
 
 var metrics = [
-  source_bedfile.metric("18277.bed"),
-  source_bedfile.metric("19466.bed"),
-  source_bedfile.metric("23138.bed"),
+  source_bedfile.metric("data/18277.bed"),
+  source_bedfile.metric("data/19466.bed"),
+  source_bedfile.metric("data/23138.bed"),
 ];
 
 d3.select("#with_rule").selectAll(".horizon")
