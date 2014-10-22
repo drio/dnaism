@@ -7,12 +7,13 @@
 <script src="js/underscore-min.js"></script>
 <script src="js/dnaism.v1.min.js"></script>
 <script src="js/common.js"></script>
+<script src="js/linechart.js"></script>
 
 <head>
   <title>DNAism: Horizon Charts for genomics.</title>
 </head>
 
-<section style="background:#fff">
+<section id="intro" style="background:#fff">
 <h2><a href="#introduction">>></a>Introduction</h2>
 
 <p> Data visualization is an important method to extract value from
@@ -37,7 +38,7 @@ instead of time.
 
 
 
-<section style="background:#fff">
+<section id="line-chart" style="background:#fff">
 
 <h2><a href="#horizon_charts"></a>Introducing Horizon Charts</h2>
 
@@ -53,58 +54,34 @@ case). We could visualize it using a simple line chart:
 <div id="basic_line_chart"></div>
 
 <script>
-function viz_line_chart(data, w, h) {
-  var margin = {top: 20, right: 10, bottom: 20, left: 10},
-      width = w - margin.left - margin.right,
-      height = h - margin.top - margin.bottom,
 
-      x = d3.scale.linear()
-            .range([0, width]);
+var w = 800, h = 200,
+    margin = {top: 20, right: 10, bottom: 20, left: 10},
+    width = w - margin.left - margin.right,
+    height = h - margin.top - margin.bottom;
 
-      y = d3.scale.linear()
-            .range([height, 0]);
-
-      line = d3.svg.line()
-        .x(function(d, i) { return x(i); })
-        .y(function(d, i) { return y(d); });
-
-      baseline = d3.svg.line()
-        .x(function(d, i) { return x(i); })
-        .y(function(d) { return y(0); });
+var svg = d3.select("#basic_line_chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-  y.domain(d3.extent(data, function(d) { return d; }));
-  x.domain([0, data.length]);
-
-  var svg = d3.select("#basic_line_chart").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  svg.append("path")
-      .datum(data)
-      .attr("class", "line-chart")
-      .attr("d", line);
-
-  svg.append("path")
-      .datum(data)
-      .attr("class", "baseline")
-      .attr("d", baseline);
-}
+var lchart = d3.linechart()
+              .width(width)
+              .height(height);
 
 d3.json("data/unemployment.json", function(data, error) {
-  var d = common.rate_only(data),
-      w = 800, h = 200;
+  var d = common.rate_only(data);
 
-  viz_line_chart(d, w, h);
+  svg.data([d]).call(lchart);
 
   d3.select("#slider")
     .on("input", function() {
       var new_height = +this.value;
       d3.select("#slider_value").text(new_height);
-      d3.select("#basic_line_chart").select("svg").remove();
-      viz_line_chart(d, w, new_height);
+      d3.select("#basic_line_chart").select("g").selectAll("*").remove();
+      svg.call(lchart.height(new_height - margin.top - margin.bottom));
     });
 });
 </script>
@@ -112,8 +89,8 @@ d3.json("data/unemployment.json", function(data, error) {
 
 
 
-
-<section style="background:#fff">
+<!--
+<section id="horizon" style="background:#fff">
   <style>
 
   #horizon-controls {
@@ -140,9 +117,8 @@ d3.json("data/unemployment.json", function(data, error) {
   <script src="js/horizon.js"></script>
 
   <script>
-
   var width = 800,
-      height = 360;
+      height = 200;
 
   var chart = d3.horizon()
       .width(width)
@@ -177,6 +153,7 @@ d3.json("data/unemployment.json", function(data, error) {
 
   </script>
 </section>
+-->
 
 
 

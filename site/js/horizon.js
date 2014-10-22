@@ -94,12 +94,16 @@
 
         path.enter().append("path")
             .style("fill", color)
+            //.style("stroke", "blue")
+            //.style("stroke-width", "1.5px")
             .attr("transform", t0)
             .attr("d", d0);
 
         path.transition()
             .duration(duration)
             .style("fill", color)
+            //.style("stroke", "blue")
+            //.style("stroke-width", "1.5px")
             .attr("transform", t1)
             .attr("d", d1);
 
