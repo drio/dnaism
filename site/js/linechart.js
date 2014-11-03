@@ -36,7 +36,6 @@
             .attr("d", baseline);
       });
 
-
     } // core logic
 
     linechart.width = function(x) {

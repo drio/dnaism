@@ -1,0 +1,118 @@
+<!doctype html>
+<!-- vim: set ts=2 sw=2: -->
+
+<style>
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  margin: 30px auto;
+  width: 800px;
+  position: relative;
+}
+
+#main {
+  border-style: dotted;
+  border-width: 1px;
+  border-color: red;
+  background-color: white;
+  padding: 10px;
+}
+
+.area_pos {
+    fill: green;
+    stroke-width: 0;
+}
+
+.area_neg {
+    fill: blue;
+    stroke-width: 0;
+}
+
+svg {
+  width: 700px;
+  height: 400px;
+  border-style: solid;
+  border-width: 0px;
+  border-color: blue;
+}
+
+.line-chart {
+  fill: none;
+  stroke: blue;
+  stroke-width: 0px;
+}
+
+</style>
+
+<script src="js/d3.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/dnaism.v1.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/linechart.js"></script>
+
+<body>
+  <div id="main">
+
+  </div>
+</body>
+
+
+<script>
+  function a_line(f_cond, x, y) {
+      return d3.svg.line()
+                .x(function(d, i) { return x(i); })
+                .y(function(d, i) { return f_cond(d) ? y(d) : y(0); });
+  }
+
+  (function() {
+
+    d3.json("data/unemployment.json", function(data, error) {
+      var width = 700, height = 400,
+          data = common.rate_only(data),
+          svg = d3.select("#main").append("svg");
+
+      var x = d3.scale.linear().range([0, width]),
+          y = d3.scale.linear().range([height, 0]);
+
+      y.domain(d3.extent(data, function(d) { return d; }));
+      x.domain([0, data.length]);
+
+      var cond_pos = function(d) { return d >= 0; },
+          cond_neg = function(d) { return d <= 0; },
+          pos_line = a_line(cond_pos, x, y),
+          neg_line = a_line(cond_neg, x, y),
+          pos_area = d3.svg.area()
+                      .x(function(d, i) { return x(i); })
+                      .y0(function(d, i) { return y(0); })
+                      .y1(function(d, i) { return cond_pos(d) ? y(d) : y(0); })
+                      .interpolate("linear"),
+          neg_area = d3.svg.area()
+                      .x(function(d, i) { return x(i); })
+                      .y0(function(d, i) { return y(0); })
+                      .y1(function(d, i) { return cond_neg(d) ? y(d) : y(0); })
+                      .interpolate("linear");
+
+
+     svg.append("path")
+        .datum(data)
+        .attr("class", "area_pos")
+        .attr("d", pos_area);
+
+      svg.append("path")
+          .datum(data)
+          .attr("class", "line-chart")
+          .attr("d", pos_line);
+
+     svg.append("path")
+        .datum(data)
+        .attr("class", "area_neg")
+        .attr("d", neg_area);
+
+      svg.append("path")
+          .datum(data)
+          .attr("class", "line-chart")
+          .attr("d", neg_line);
+
+    });
+
+  })();
+</script>

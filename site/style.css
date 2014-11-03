@@ -1,13 +1,24 @@
 /* vim: set ts=2 sw=2: */
 body {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "sans-serif", Helvetica, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
   margin: 30px auto;
   width: 800px;
   position: relative;
 }
 
 p {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+
+section {
+  padding-top: 10px;
+}
+
+h2 {
   padding-top: 10px;
 }
 
@@ -105,4 +116,25 @@ header {
   fill: none;
   stroke: grey;
   stroke-width: 1.5px;
+}
+
+#slider_container {
+  padding-bottom: 10px;
+  padding-top: 25px;
+}
+
+.blue {
+  font-weight:bold; color:rgb(25, 63, 134)
+}
+
+.green {
+  font-weight:bold; color:rgb(37, 87, 37)
+}
+
+.api {
+  font-style: italic; color: blue;
+}
+
+pre, code {
+  font-family: "Menlo";
 }
