@@ -15,6 +15,14 @@ p {
   font-size: 17px;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: green;
+}
+
 #top-header {
   /*position: fixed;*/
   background-color: white;
@@ -70,17 +78,17 @@ p {
 section {
   font-family: "Open sans";
   font-size: 17px;
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 
 h2 {
-  padding-top: 10px;
-  border-left: 5px solid #eee;
-  color: #444;
-  font-weight: bold;
-  padding-left: 10px;
+  font-family: "Open sans";
   font-size: 25px;
+  font-weight: bold;
+  border-left: 5px solid green;
+  color: #444;
+  padding-left: 10px;
 }
 
 .axis {

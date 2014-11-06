@@ -213,8 +213,8 @@ d3.json("data/unemployment.json", function(data, error) {
 
 
 
-
-<h2><a href="#requirements"></a>Requirements</h2>
+<section>
+<h2>Requirements</h2>
 
 <p>In order to get the most out of DNAism you should be familiar with the
 DOM, CSS, HTML and <a href="http://d3js.org">D3</a>. You can read
@@ -255,9 +255,11 @@ as we progress in the visualization.
 
 <p> At the end of our html document we add a script tag. Within it, we will
 be adding all the Javascript code with the instructions to create the visualization.
+</section>
 
 
 
+<section>
 <h2>Creating a context</h2>
 
 <p> Our code will use the different DNAism components to create the visualization,
@@ -280,8 +282,10 @@ have to specify the space we have to visualize the data, in pixels.
 
 <p> We haven't rendered any web element yet, we are just telling DNAism what
 region we are interested on.
+</section>
 
 
+<section>
 <h2>Sources</h2>
 
 <p> Next we define a source. The interface of a source component defines a
@@ -295,8 +299,12 @@ var source_bedfile = context.bedfile();
 <p> For this example we are using the <span class="api">bedfile()</span> source. This source's logic
 will request whole files to the server. Notice we haven't yet specified what
 files we want to load, we do that with the next component <span class="api">metric()</span>.
+</section>
 
 
+
+
+<section>
 <h2>Metrics</h2>
 
 <p> Now we can use the source we have just created to instantiate as many metrics as
@@ -312,9 +320,13 @@ metric = [ source_bedfile.metric("18277.bed") ];
 
 <p> Now DNAism knows how to retrieve data for that particular sample. We can now
 start creating the visual elements.
+</section>
 
 
 
+
+
+<section>
 <h2>Creating the horizon chart</h2>
 
 <p> Bear with me here:
@@ -512,6 +524,7 @@ d3.select("#with_rule").selectAll(".horizon")
 
 </code>
 </pre>
+</section>
 
 <script src="highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
