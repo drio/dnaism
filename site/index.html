@@ -4,6 +4,7 @@
 <style> @import url('style.css'); </style>
 
 <link rel="stylesheet" href="highlight/styles/tomorrow.css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 <script src="js/d3.js"></script>
 <script src="js/underscore-min.js"></script>
@@ -14,6 +15,25 @@
 <head>
   <title>DNAism: Horizon Charts for genomics.</title>
 </head>
+
+<a href="https://github.com/drio/dnaism">
+  <img style="position:fixed;top:0;right:0;border:0;" width="149" height="149" src="imgs/forkme.png" alt="Fork me on GitHub">
+</a>
+
+<div id="top-header">
+  <!-- <div class="header-image" style="background-image: url(http://f.cl.ly/items/2E2y3F2W1D2W3m402v0Y/phoenix-hc.jpg);">-->
+  <header class="text-header">
+    <div id="title">DNAism</div>
+    <div id="slogan">Exploring genomic datasets on the web with Horizon Charts</div>
+    <!--
+    <div id="links">
+      <a href="github">github</a> |
+      <a href="support">support</a> |
+      <a href="code">code</a>
+    </div>
+    -->
+  </header>
+</div>
 
 <section id="intro" style="background:#fff">
 <h2>Introduction</h2>
@@ -238,7 +258,7 @@ be adding all the Javascript code with the instructions to create the visualizat
 
 
 
-<h2>Creating a context.</h2>
+<h2>Creating a context</h2>
 
 <p> Our code will use the different DNAism components to create the visualization,
 starting with <span class="api">context()</span>.
@@ -262,7 +282,7 @@ have to specify the space we have to visualize the data, in pixels.
 region we are interested on.
 
 
-<h2>Sources.</h2>
+<h2>Sources</h2>
 
 <p> Next we define a source. The interface of a source component defines a
 contract that context uses to requests data for a specific region. All the
@@ -277,7 +297,7 @@ will request whole files to the server. Notice we haven't yet specified what
 files we want to load, we do that with the next component <span class="api">metric()</span>.
 
 
-<h2>Metrics.</h2>
+<h2>Metrics</h2>
 
 <p> Now we can use the source we have just created to instantiate as many metrics as
 we want. Those metrics will point to a specific file (or sample). To start, we will
@@ -295,7 +315,7 @@ start creating the visual elements.
 
 
 
-<h2>Creating the horizon chart.</h2>
+<h2>Creating the horizon chart</h2>
 
 <p> Bear with me here:
 
