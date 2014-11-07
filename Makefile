@@ -40,6 +40,7 @@ pages:
 	cp -r site /tmp
 	git checkout gh-pages
 	cp -r /tmp/site/* .
+	cat tracking.txt >> index.html
 	rm -rf /tmp/site
 	echo "Type comming msg: "; read MSG; git commit -a -m '$$MSG'
 	git push -u origin gh-pages
