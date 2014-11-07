@@ -37,11 +37,10 @@ site: dnaism.v1.min.js
 	rsync -Lavz --delete $< site/* apu:/usr/local/www/dnaism.davidr.io/public/
 
 pages:
-	git checkout gh-pages
-	echo "asdfasdf" >> index.html
-	git commit -a -m 'pages change.'
-	git push -u origin gh-pages
-	git checkout master
+	#git checkout gh-pages
+	echo "Type comming msg: "; read MSG; git commit -a -m '$$MSG'
+	#git push -u origin gh-pages
+	#git checkout master
 
 clean:
 	rm -f dnaism.v1.js dnaism.v1.min.js
