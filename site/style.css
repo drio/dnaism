@@ -19,6 +19,7 @@ a {
   text-decoration: none;
 }
 
+
 a:hover {
   color: green;
 }
@@ -190,11 +191,13 @@ h2 {
 }
 
 .blue {
-  font-weight:bold; color:rgb(25, 63, 134)
+  font-size: 20px; font-weight:bold;
+  color:rgb(25, 63, 134)
 }
 
 .green {
-  font-weight:bold; color:rgb(37, 87, 37)
+  font-size: 20px; font-weight:bold;
+  color:rgb(37, 87, 37)
 }
 
 .api {
