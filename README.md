@@ -1,6 +1,6 @@
 ### DNAism
 
-Main site [here](https://drio.github.com/DNAism).
+Main site [here](http://drio.github.io/dnaism/).
 
 #### Questions, patches, comments, feedback?
 
