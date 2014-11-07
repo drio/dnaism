@@ -1,0 +1,209 @@
+/* vim: set ts=2 sw=2: */
+body {
+  font-family: "sans-serif", Helvetica, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 30px auto;
+  width: 800px;
+  position: relative;
+}
+
+p {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  font-family: "Open sans";
+  font-size: 17px;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+a:hover {
+  color: green;
+}
+
+#top-header {
+  /*position: fixed;*/
+  background-color: white;
+  color: red;
+  top: 0px;
+  left: 0px;
+  /*height: 500px;*/
+  /*width: 1540px;*/
+}
+
+  header {
+    /*position: absolute;*/
+    /*border-bottom: 3px solid #eee;*/
+    padding: 0px;
+    height: 100px;
+    width: 1540px;
+  }
+
+  header #title {
+    font-size: 50px;
+    color: black;
+    font-weight:bold;
+  }
+
+  header #slogan {
+    color: black;
+    font-size: 20px;
+    padding-left: 2px;
+  }
+
+  #links a {
+    color: black;
+    text-decoration: none;
+  }
+
+  #links a:hover {
+    color: red;
+  }
+
+  .header-image {
+    background-color: #2B2B2B;
+    background-size: cover;
+    height: 122px;
+    width: 1400px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,.5);
+  }
+
+#intro {
+  padding-top: 10px;
+}
+
+
+section {
+  font-family: "Open sans";
+  font-size: 17px;
+  padding-top: 20px;
+}
+
+
+h2 {
+  font-family: "Open sans";
+  font-size: 25px;
+  font-weight: bold;
+  border-left: 5px solid green;
+  color: #444;
+  padding-left: 10px;
+}
+
+.axis {
+  font: 10px sans-serif;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.axis text {
+  -webkit-transition: fill-opacity 250ms linear;
+}
+
+.axis path {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis.top {
+  background-image: linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  top: 0px;
+  padding: 0 0 24px 0;
+}
+
+.axis.bottom {
+  background-image: linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(bottom, #fff 0%, rgba(255,255,255,0) 100%);
+  bottom: 0px;
+  padding: 24px 0 0 0;
+}
+
+.horizon {
+  border-bottom: solid 1px #000;
+  overflow: hidden;
+  position: relative;
+}
+
+.horizon {
+  border-top: solid 0px #000;
+  border-bottom: solid 0px #000;
+}
+
+.horizon + .horizon {
+  border-top: none;
+}
+
+.horizon canvas {
+  display: block;
+}
+
+.horizon .title,
+.horizon .value {
+  bottom: 0;
+  line-height: 30px;
+  margin: 0 6px;
+  position: absolute;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  white-space: nowrap;
+}
+
+.horizon .title {
+  left: 0;
+}
+
+.horizon .value {
+  right: 0;
+}
+
+.line {
+  background: #000;
+  z-index: 2;
+}
+
+.line-chart {
+  fill: none;
+  stroke: blue;
+  stroke-width: 1.5px;
+}
+
+.baseline {
+  fill: none;
+  stroke: grey;
+  stroke-width: 1.5px;
+}
+
+#slider_container {
+  padding-bottom: 10px;
+  padding-top: 25px;
+}
+
+.blue {
+  font-size: 20px; font-weight:bold;
+  color:rgb(25, 63, 134)
+}
+
+.green {
+  font-size: 20px; font-weight:bold;
+  color:rgb(37, 87, 37)
+}
+
+.api {
+  font-style: italic; color: blue;
+}
+
+pre, code {
+  font-family: "Menlo";
+}
