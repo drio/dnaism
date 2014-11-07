@@ -37,8 +37,10 @@ site: dnaism.v1.min.js
 	rsync -Lavz --delete $< site/* apu:/usr/local/www/dnaism.davidr.io/public/
 
 pages:
+	cp -r site /tmp
 	git checkout gh-pages
-	cp -r site/* .
+	cp -r /tmp/site/* .
+	rm -rf /tmp/site
 	echo "Type comming msg: "; read MSG; git commit -a -m '$$MSG'
 	git push -u origin gh-pages
 	git checkout master
