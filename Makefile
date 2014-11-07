@@ -1,4 +1,4 @@
-JS_COMPILER = ./node_modules/.bin/uglifyjs
+JS_COMPILER = uglifyjs
 
 #dnaism.v1.min.js
 all: dnaism.v1.js
