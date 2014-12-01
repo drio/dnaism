@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- vim: set ts=2 sw=2: -->
+<!-- vim: set ts=2 sw=2 ft=html: -->
 
 <style> @import url('style.css'); </style>
 
@@ -52,9 +52,9 @@ href="http://github.com/square/cubism">Cubism</a>, a project from the same
 author, also based on D3, that helps exploring time series data using a
 visualization technique called Horizon Charts.
 
-<p> Horizon Charts are not only useful in that domain. Biological datasets for
-example can greatly benefit from them. That's why we have modified the original
-library to work with Genomic Datasets. We call this new library DNAism.
+<p> Horizon Charts are not only useful in that domain. Biological datasets, for
+example, can greatly benefit from them. That's why we have modified the original
+library to work with Genomic datasets. We call this new library DNAism.
 </section>
 
 
@@ -531,6 +531,49 @@ d3.select("#with_rule").selectAll(".horizon")
 </code>
 </pre>
 </section>
+
+<section>
+<h2>Using other sources</h2>
+
+<p> If the region of the genome we are exploring is large, the browser
+will receive a huge number of data points. That may be a problem:
+the amount of memory we have in our system. We can do better.
+
+<p> DNAism is data format and backend agnostic. You can extend DNAism to
+capture the details of your own datasets. This flexibility allow us, for
+example, to change our source to make sure only the necessary data points 
+used in the visualization are sent to the browser.
+
+<p> When we create new sources, we are creating new ways for DNAism to load
+datasets. A source has a metric method which encapsulates all the logic on how
+to retrieve data for an specific location of the genome.  The <span
+class="api">horizon()</span> component will make calls to each of the metrics
+to retrieve the necessary data points to render the different horizon charts.
+
+<p> In the logic for the most simple source (bedfile), a request is made
+to the webserver to retrieve a whole file. A domain conversion has to be
+performed between the raw data points for the genomic region and the available
+number of pixels for the visualization. 
+
+<p> The bedserver source implements the same logic, but it performs a request 
+to a RESTful service. The service does all the heavy lifting and only returns 
+the necessary data points. If you want to know more about how the backend 
+works, take a look to <a href="https://github.com/drio/bedserver">this</a>. 
+You'll see the server indexes the bedfiles to speed up the queries and quickly
+access the regions of interest.
+</section>
+
+<section>
+<h2>Questions, comments and feedback</h2>
+
+If you encounter any problem when using DNAism or you have feedback, please 
+open a <a href="https://github.com/drio/dnaism/issues">ticket</a> in github. 
+We promise we'll help you out as soon as possible.
+
+</section>
+
+<footer> -drd </footer>
+
 
 <script src="highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
