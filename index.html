@@ -536,43 +536,45 @@ d3.select("#with_rule").selectAll(".horizon")
 <h2>Using other sources</h2>
 
 <p> If the region of the genome we are exploring is large, the browser
-will receive a huge number of data points. That may be a problem:
+will have to load a huge number of data points. That may be a problem depending
 the amount of memory we have in our system. We can do better.
 
 <p> DNAism is data format and backend agnostic. You can extend DNAism to
-capture the details of your own datasets. This flexibility allow us, for
-example, to change our source to make sure only the necessary data points 
-used in the visualization are sent to the browser.
+accommodate the specific details of your own datasets. This flexibility allow
+us, for example, to change our sources to make sure we only sent to the browser
+the necessary data points used in the visualization.
 
-<p> When we create new sources, we are creating new ways for DNAism to load
-datasets. A source has a metric method which encapsulates all the logic on how
-to retrieve data for an specific location of the genome.  The <span
+<p> When we create new sources, we are extending the ways for DNAism to load
+datasets. A source has a metric method which encapsulates all the logic for how
+to retrieve data for a specific genome location.  The <span
 class="api">horizon()</span> component will make calls to each of the metrics
-to retrieve the necessary data points to render the different horizon charts.
+to retrieve the necessary data points that will be used in each horizon 
+chart.
 
-<p> In the logic for the most simple source (bedfile), a request is made
-to the webserver to retrieve a whole file. A domain conversion has to be
-performed between the raw data points for the genomic region and the available
-number of pixels for the visualization. 
+<p> In the logic for the most simple source (bedfile), a request is made to the
+webserver to retrieve the whole file associated with the metric (the sample we
+are working on). When the rendering happens, DNAism has to reduce the raw data
+points to fit the available number of pixels in the visualization. 
 
-<p> The bedserver source implements the same logic, but it performs a request 
-to a RESTful service. The service does all the heavy lifting and only returns 
-the necessary data points. If you want to know more about how the backend 
-works, take a look to <a href="https://github.com/drio/bedserver">this</a>. 
-You'll see the server indexes the bedfiles to speed up the queries and quickly
-access the regions of interest.
+<p> The bedserver source implements the same logic, but it performs a request
+to a RESTful service. The backend does all the heavy lifting and only
+returns the necessary data points. If you want to know more about how the
+backend works, take a look at <a
+href="https://github.com/drio/bedserver">this</a>.  You'll see the server
+indexes the bedfiles to speed up the queries and quickly access the regions of
+interest.  
 </section>
 
 <section>
 <h2>Questions, comments and feedback</h2>
 
-If you encounter any problem when using DNAism or you have feedback, please 
-open a <a href="https://github.com/drio/dnaism/issues">ticket</a> in github. 
-We promise we'll help you out as soon as possible.
+If you encounter any problem when using DNAism or you have feedback, please
+open a <a href="https://github.com/drio/dnaism/issues">ticket</a>.  We promise
+we'll help you out as soon as possible.
 
 </section>
 
-<footer> -drd </footer>
+<footer>  </footer>
 
 
 <script src="highlight/highlight.pack.js"></script>
