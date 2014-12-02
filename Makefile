@@ -34,6 +34,7 @@ test: dnaism.v1.js
 	tests/main.js
 
 site: dnaism.v1.min.js
+	cd example/depth; make beds
 	rsync -Lavz --delete $< site/* apu:/usr/local/www/dnaism.davidr.io/public/
 
 pages:
