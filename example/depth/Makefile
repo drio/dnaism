@@ -2,7 +2,8 @@
 all: beds index.html serve
 
 beds:
-	tar -jxvf depth.beds.tar.bz2
+	@echo "Unpacking bed files ..."
+	tar -jxf depth.beds.tar.bz2
 
 index.html: index.template.html
 	./gen_html.py > $@
@@ -15,6 +16,6 @@ serve:
 	python3 -m http.server 8888
 
 clean:
-	rm -f *.bed
+	rm -f *.bed index.html
 
 .phony: from_server serve beds clean
