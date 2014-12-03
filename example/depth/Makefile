@@ -12,7 +12,7 @@ from_server:
 	./from_server.sh
 
 serve:
-	@echo "--> point browser your browser here: http://localhost:8888"
+	@echo "--> point your browser here: http://localhost:8888"
 	python -m SimpleHTTPServer 8888
 
 clean:
