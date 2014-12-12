@@ -38,7 +38,7 @@
 <section id="impatient" style="background:#fff">
   <h2>For the impatient</h2>
 
-  <p>Open your console (we need tar and python for this to work) and run:
+  <p>Open your console (we need git, tar and python for this to work) and run:
 
   <pre><code class="sh">
   $ git clone https://github.com/drio/dnaism.git
@@ -50,14 +50,14 @@
   Serving HTTP on 0.0.0.0 port 8888 ...
   </code></pre>
 
+  <p> And now point your browser to <a href="http://localhost:8888">http://localhost:8888</a>
+
+  <p> If everything went well you should see multiple horizon charts encoding the 
+  read depth for multiple genomic samples for a small region of the genome.
+
   <p> Here is a video that shows these steps:
 
   <p> <iframe src="//player.vimeo.com/video/113439870" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-  <p> And now point your browser to <a href="http://localhost:8888">http://localhost:8888"</a>
-
-  <p> If everything went well you should see multiple horizon charts encoding the 
-  read depth for for multiple genomic samples for a small region of the genome.
 </section>
 
 
@@ -68,33 +68,34 @@
   navigation of intricate and dense data sets.
 
   <p> The web and its open standards present a fantastic environment to build
-  visualizations and reaching many people. You have probably heart of <a
+  visualizations and reach many people. You have probably heard of <a
   href="http://d3js.org">D3</a>, a Javascript library build by <a
   href="http://bost.ocks.org/mike/">Mike Bostock</a> that beautifully abstracts
-  and exposes these technologies for the context of visualizations.
+  and exposes these technologies for the purpose of generating and manipulating
+  novel large-scale visualizations.
 
   <p> You are probably less familiar with <a
   href="http://github.com/square/cubism">Cubism</a>, a project from the same
-  author, also based on D3, that helps exploring time series data using a
+  author, also based on D3, that helps explore time series data using a
   visualization technique called Horizon Charts.
 
-  <p> Horizon Charts are not only useful in that domain. Biological datasets, for
-  example, can greatly benefit from them. That's why we have modified the original
-  library to work with Genomic datasets. We call this new library DNAism.
+  <p> Horizon Charts are not only useful in the domain of time series data.
+  Biological datasets, for example genomic data, can greatly benefit from them.
+  That's why we have modified the original library to work with Genomic datasets.
+  We call this new library DNAism.  
 </section>
-
 
 
 <section id="line-chart" style="background:#fff">
   <h2>A case for Horizon Charts</h2>
 
-  <p> Imagine we have a single variable we want to explore (stock data in this
-  case). We could visualize it using a simple line chart (below).
+  <p> Imagine we have a single variable we want to explore (in this case stock market data
+  over time). We could visualize it using a simple line chart (below).
 
   <p> This method is effective as soon as we have enough vertical space to encode
-  the visuals. As we decrease it, we loose graphical perception. This problem
-  increases as more more variables are introduced. The visualization method stops
-  being
+  the visuals. As we decrease the vertical space, we lose graphical perception. This problem
+  increases as more variables or a greater range of values for those variables are introduced 
+  The visualization method stops being
   <a
   href="http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf">effective</a>.
   Try it out by using the slider below:
@@ -117,9 +118,8 @@
   and <span class="blue">negative</span> values and flip the negative ones over
   the baseline. We then divide the chart in horizontal bands (initially one
   single band is used).  As we reduce vertical space (try it by using the +/-
-  buttons below), we create more bands and collapse them over the baseline. Different
-  intensities are applied to the different bands in order to visually differentiate
-  them.
+  buttons below), we create more bands and collapse them over the baseline. 
+  Different color intensities or shades are applied to the different bands in order to visually differentiate them.
 
   <script>
 
@@ -279,7 +279,6 @@
   </section>
 
 
-
   <section>
   <h2>Creating a context</h2>
 
@@ -317,7 +316,7 @@
   </code></pre>
 
   <p> For this example we are using the <span class="api">bedfile()</span>
-  source. This source's logic will request whole files to the server. Notice we
+  source. This source's logic will request whole files from the server. Notice we
   haven't yet specified what files we want to load, we do that with the next
   component <span class="api">metric()</span>.
 </section>
@@ -365,6 +364,7 @@
   class="api">context.horizon()</span> to create the necessary visual elements
   for the metric(sample) we want to create. Remember, in this case we have only
   one sample.
+
 
   <p> And here you have the result:
 
@@ -551,12 +551,12 @@
 
   <p> If the region of the genome we are exploring is large, the browser
   will have to load a huge number of data points. That may be a problem depending
-  the amount of memory we have in our system. We can do better.
+  the amount of memory you have in your system. But there is a solution to this issue.
 
   <p> DNAism is data format and backend agnostic. You can extend DNAism to
   accommodate the specific details of your own datasets. This flexibility allow
   us, for example, to change our sources to make sure we only sent to the browser
-  the necessary data points used in the visualization.
+  the data points that are necessary for the visualization we intend.
 
   <p> When we create new sources, we are extending the ways for DNAism to load
   datasets. A source has a metric method which encapsulates all the logic for how
@@ -565,10 +565,10 @@
   to retrieve the necessary data points that will be used in each horizon 
   chart.
 
-  <p> In the logic for the most simple source (bedfile), a request is made to the
-  webserver to retrieve the whole file associated with the metric (the sample we
-  are working on). When the rendering happens, DNAism has to reduce the raw data
-  points to fit the available number of pixels in the visualization. 
+  <p> In the logic for the most simple source (bedfile), a request is made to
+  the webserver to retrieve the whole file associated with the metric (the sample
+  we are working on). When the rendering happens, DNAism has to reduce the number
+  raw data points to fit the available number of pixels in the visualization. 
 
   <p> The bedserver source implements the same logic, but it performs a request
   to a RESTful service. The backend does all the heavy lifting and only
