@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- vim: set ts=2 sw=2 ft=html: -->
+<!-- vim: set ts=2 sw=2 ft=html foldmethod=indent: -->
 
 <style> @import url('style.css'); </style>
 
@@ -25,116 +25,130 @@
   <header class="text-header">
     <div id="title">DNAism</div>
     <div id="slogan">Exploring genomic datasets on the web with Horizon Charts</div>
-    <!--
-    <div id="links">
-      <a href="github">github</a> |
-      <a href="support">support</a> |
-      <a href="code">code</a>
-    </div>
-    -->
   </header>
 </div>
 
-<section id="intro" style="background:#fff">
-<h2>Introduction</h2>
+<section id="impatient" style="background:#fff">
+  <h2>For the impatient</h2>
 
-<p> Effective visualizations help us understand data and facilitate the
-navigation of intricate and dense data sets.
+  <p>Open your console (we need git, tar and python for this to work) and run:
 
-<p> The web and its open standards present a fantastic environment to build
-visualizations and reaching many people. You have probably heart of <a
-href="http://d3js.org">D3</a>, a Javascript library build by <a
-href="http://bost.ocks.org/mike/">Mike Bostock</a> that beautifully abstracts
-and exposes these technologies for the context of visualizations.
+  <pre><code class="sh">
+  $ git clone https://github.com/drio/dnaism.git
+  $ cd dnaism/example/depth
+  $ make
+  Unpacking bed files ...
+  point your browser here: http://localhost:8888
+  python3 -m http.server 8888
+  Serving HTTP on 0.0.0.0 port 8888 ...
+  </code></pre>
 
-<p> You are probably less familiar with <a
-href="http://github.com/square/cubism">Cubism</a>, a project from the same
-author, also based on D3, that helps exploring time series data using a
-visualization technique called Horizon Charts.
+  <p> And now point your browser to <a href="http://localhost:8888">http://localhost:8888</a>
 
-<p> Horizon Charts are not only useful in that domain. Biological datasets, for
-example, can greatly benefit from them. That's why we have modified the original
-library to work with Genomic datasets. We call this new library DNAism.
+  <p> If everything went well you should see multiple horizon charts encoding the 
+  read depth for multiple genomic samples for a small region of the genome.
+
+  <p> Here is a video that shows these steps:
+
+  <p> <iframe src="//player.vimeo.com/video/113439870" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </section>
 
 
+<section id="intro" style="background:#fff">
+  <h2>Introduction</h2>
 
+  <p> Effective visualizations help us understand data and facilitate the
+  navigation of intricate and dense data sets.
+
+  <p> The web and its open standards present a fantastic environment to build
+  visualizations and reach many people. You have probably heard of <a
+  href="http://d3js.org">D3</a>, a Javascript library build by <a
+  href="http://bost.ocks.org/mike/">Mike Bostock</a> that beautifully abstracts
+  and exposes these technologies for the purpose of generating and manipulating
+  novel large-scale visualizations.
+
+  <p> You are probably less familiar with <a
+  href="http://github.com/square/cubism">Cubism</a>, a project from the same
+  author, also based on D3, that helps explore time series data using a
+  visualization technique called Horizon Charts.
+
+  <p> Horizon Charts are not only useful in the domain of time series data.
+  Biological datasets, for example genomic data, can greatly benefit from them.
+  That's why we have modified the original library to work with Genomic datasets.
+  We call this new library DNAism.  
+</section>
 
 
 <section id="line-chart" style="background:#fff">
+  <h2>A case for Horizon Charts</h2>
 
-<h2>A case for Horizon Charts</h2>
+  <p> Imagine we have a single variable we want to explore (in this case stock market data
+  over time). We could visualize it using a simple line chart (below).
 
+  <p> This method is effective as soon as we have enough vertical space to encode
+  the visuals. As we decrease the vertical space, we lose graphical perception. This problem
+  increases as more variables or a greater range of values for those variables are introduced 
+  The visualization method stops being
+  <a
+  href="http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf">effective</a>.
+  Try it out by using the slider below:
 
-<p> Imagine we have a single variable we want to explore (stock data in this
-case). We could visualize it using a simple line chart (below).
+  <div id="slider_container">
+    <input id="slider" type="range" min="50" step="10" max="200" value="200"/>
+    <span>Height size = </span>
+    <span id="slider_value">200</span>
+  </div>
 
-<p> This method is effective as soon as we have enough vertical space to encode
-the visuals. As we decrease it, we loose graphical perception. This problem
-increases as more more variables are introduced. The visualization method stops
-being
-<a
-href="http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf">effective</a>.
-Try it out by using the slider below:
+  <div id="basic_line_chart"></div>
 
-<div id="slider_container">
-  <input id="slider" type="range" min="50" step="10" max="200" value="200"/>
-  <span>Height size = </span>
-  <span id="slider_value">200</span>
-</div>
+  <p> Horizon Charts can help us here. Below you can see the same dataset, this
+  time visually encoded using a Horizon Chart.
 
-<div id="basic_line_chart"></div>
+  <p> You can find the details of the process for converting a line chart into a
+  horizon chart <a
+  href="http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf">here</a>.
+  We start by applying different colors to <span class="green">positive</span>
+  and <span class="blue">negative</span> values and flip the negative ones over
+  the baseline. We then divide the chart in horizontal bands (initially one
+  single band is used).  As we reduce vertical space (try it by using the +/-
+  buttons below), we create more bands and collapse them over the baseline. 
+  Different color intensities or shades are applied to the different bands in order to visually differentiate them.
 
-<p> Horizon Charts can help us here. Below you can see the same dataset, this
-time visually encoded using a Horizon Chart.
+  <script>
 
-<p> You can find the details of the process for converting a line chart into a
-horizon chart <a
-href="http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf">here</a>.
-We start by applying different colors to <span class="green">positive</span>
-and <span class="blue">negative</span> values and flip the negative ones over
-the baseline. We then divide the chart in horizontal bands (initially one
-single band is used).  As we reduce vertical space (try it by using the +/-
-buttons below), we create more bands and collapse them over the baseline. Different
-intensities are applied to the different bands in order to visually differentiate
-them.
+  var w = 800, h = 200,
+      margin = {top: 20, right: 10, bottom: 20, left: 10},
+      width = w - margin.left - margin.right,
+      height = h - margin.top - margin.bottom;
 
-<script>
-
-var w = 800, h = 200,
-    margin = {top: 20, right: 10, bottom: 20, left: 10},
-    width = w - margin.left - margin.right,
-    height = h - margin.top - margin.bottom;
-
-var svg = d3.select("#basic_line_chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select("#basic_line_chart").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-var lchart = d3.linechart()
-              .width(width)
-              .height(height);
+  var lchart = d3.linechart()
+                .width(width)
+                .height(height);
 
-d3.json("data/unemployment.json", function(data, error) {
-  var d = common.rate_only(data);
+  d3.json("data/unemployment.json", function(data, error) {
+    var d = common.rate_only(data);
 
-  svg.data([d]).call(lchart);
+    svg.data([d]).call(lchart);
 
-  d3.select("#slider")
-    .on("input", function() {
-      var new_height = +this.value;
-      d3.select("#slider_value").text(new_height);
-      d3.select("#basic_line_chart").select("g").selectAll("*").remove();
-      svg.call(lchart.height(new_height - margin.top - margin.bottom));
-    });
+    d3.select("#slider")
+      .on("input", function() {
+        var new_height = +this.value;
+        d3.select("#slider_value").text(new_height);
+        d3.select("#basic_line_chart").select("g").selectAll("*").remove();
+        svg.call(lchart.height(new_height - margin.top - margin.bottom));
+      });
 
-  horizon_example(data);
-});
-</script>
+    horizon_example(data);
+  });
+  </script>
 </section>
-
 
 
 <section id="horizon" style="background:#fff">
@@ -208,373 +222,365 @@ d3.json("data/unemployment.json", function(data, error) {
 
 
   </script>
+
+  <p id="ack_mike">Borrowed from <a href="http://bost.ocks.org/mike/cubism/intro/#11">Mike Bostock</a>.
 </section>
-
-
-
 
 
 <section>
-<h2>Requirements</h2>
+  <h2>Requirements</h2> 
 
-<p>In order to get the most out of DNAism you should become familiar with the
-DOM, CSS, HTML and <a href="http://d3js.org">D3</a>. You can read
-more about the first three technologies
-<a href="https://developer.mozilla.org/en-US/docs/Web">here</a>.
+  <p>In order to get the most out of DNAism you should become familiar with the DOM, CSS, HTML and <a href="http://d3js.org">D3</a>. 
+  You can read more about the first three technologies <a href="https://developer.mozilla.org/en-US/docs/Web">here</a>.  
 
-<p>In the rest of this document we will learn about DNAism by building a
-visualization to help us explore the read depth for a particular
-genome region across multiple <a href="http://en.wikipedia.org/wiki/DNA_sequencing">DNA sequencing</a>
-samples. Our input data is in <a href="http://genome.ucsc.edu/FAQ/FAQformat.html">BED</a> format:
-
-<pre><code class="bash">
-$ ls *.bed
-18277.bed       23138.bed       30158.bed       34598.bed  ...
-19466.bed       27347.bed       32510.bed       34600.bed  ...
-
-$ head -3 18277.bed
-Chr17   1100003 1100004 36
-Chr17   1100004 1100005 35
-Chr17   1100005 1100006 36
-
-$ tail -3 18277.bed
-Chr17   1199991 1199992 41
-Chr17   1199992 1199997 40
-Chr17   1199997 1200000 41
-</code></pre>
+  <p>In the rest of this document we will learn about DNAism by building a
+  visualization to help us explore the read depth for a particular genome region
+  across multiple <a href="http://en.wikipedia.org/wiki/DNA_sequencing">DNA
+  sequencing</a> samples. Our input data is in <a
+  href="http://genome.ucsc.edu/FAQ/FAQformat.html">BED</a> format: 
 
 
-<p>These bed files live in the server, in the same location of the web files
-that contain the code of the article you are reading.
+  <pre><code class="bash"> 
+  $ ls *.bed 
+  18277.bed       23138.bed       30158.bed       34598.bed  ...  
+  19466.bed       27347.bed       32510.bed       34600.bed  ...  
+
+  $ head -3 18277.bed
+  Chr17   1100003 1100004 36
+  Chr17   1100004 1100005 35
+  Chr17   1100005 1100006 36
+
+  $ tail -3 18277.bed
+  Chr17   1199991 1199992 41
+  Chr17   1199992 1199997 40
+  Chr17   1199997 1200000 41
+  </code></pre>
 
 
-<p> We will start with a basic html document that loads DNAism and its
-only dependency (D3). In this basic document we also load the css styles
-for the different elements that DNAism will be creating in the document
-as we progress in the visualization.
+  <p>These bed files live in the server, in the same location of the web files
+  that contain the code of the article you are reading.
 
-<p> At the end of our html document we add a script tag. Within it, we will
-be adding all the Javascript code that will contain all the instructions necessary
-to build the visualization.
+
+  <p> We will start with a basic html document that loads DNAism and its
+  only dependency (D3). In this basic document we also load the css styles
+  for the different elements that DNAism will be creating in the document
+  as we progress in the visualization.
+
+  <p> At the end of our html document we add a script tag. Within it, we will
+  be adding all the Javascript code that will contain all the instructions necessary
+  to build the visualization.
+  </section>
+
+
+  <section>
+  <h2>Creating a context</h2>
+
+  <p> Our code will use the different DNAism components to create the visualization,
+  starting with <span class="api">context()</span>. We use it to tell the library
+  what region of the genome we want to explore.
+
+  <pre><code class="javascript">
+  var context = dnaism.context()
+                 .start(1100000)
+                 .stop(1200000)
+                 .size(800)
+                 .chrm('Chr17');
+  </code></pre>
+
+  <p> Here, we are interested in exploring (Chr17:1100000-1200000). We do that by
+  setting the chromosome (using<span class="api">chrm()</span>) and the <span
+  class="api">start()</span> and <span class="api">stop()</span> position of the
+  region of interest. We also need to specify the space we have to
+  visualize the data, in pixels.
+
+  <p> We haven't rendered any web element yet, we are just telling DNAism what
+  region we are interested on.
 </section>
-
 
 
 <section>
-<h2>Creating a context</h2>
+  <h2>Sources</h2>
 
-<p> Our code will use the different DNAism components to create the visualization,
-starting with <span class="api">context()</span>. We use it to tell the library
-what region of the genome we want to explore.
+  <p> Next we define a source. This component encapsulates the logic on how
+  to retrieve the actual data.
 
-<pre><code class="javascript">
-var context = dnaism.context()
-               .start(1100000)
-               .stop(1200000)
-               .size(800)
-               .chrm('Chr17');
-</code></pre>
+  <pre><code class="javascript">
+  var source_bedfile = context.bedfile();
+  </code></pre>
 
-<p> Here, we are interested in exploring (Chr17:1100000-1200000). We do that by
-setting the chromosome (using<span class="api">chrm()</span>) and the <span
-class="api">start()</span> and <span class="api">stop()</span> position of the
-region of interest. We also need to specify the space we have to
-visualize the data, in pixels.
-
-<p> We haven't rendered any web element yet, we are just telling DNAism what
-region we are interested on.
+  <p> For this example we are using the <span class="api">bedfile()</span>
+  source. This source's logic will request whole files from the server. Notice we
+  haven't yet specified what files we want to load, we do that with the next
+  component <span class="api">metric()</span>.
 </section>
-
-
 
 
 <section>
-<h2>Sources</h2>
+  <h2>Metrics</h2>
 
-<p> Next we define a source. This component encapsulates the logic on how
-to retrieve the actual data.
+  <p> Now we can use the source to instantiate as many metrics as necessary.
+  Those metrics will point to a specific file (or sample). To start, we will work
+  on a single sample (sample 18277). We store the metric in a Javascript array so
+  we can add more metrics (samples) later.
 
-<pre><code class="javascript">
-var source_bedfile = context.bedfile();
-</code></pre>
+  <pre><code class="javascript">
+  metric = [ source_bedfile.metric("data/18277.bed") ];
+  </code></pre>
 
-<p> For this example we are using the <span class="api">bedfile()</span>
-source. This source's logic will request whole files to the server. Notice we
-haven't yet specified what files we want to load, we do that with the next
-component <span class="api">metric()</span>.
+  <p> Now DNAism is ready to retrieve data for that particular sample. We can now
+  start creating the visual elements.
 </section>
-
-
 
 
 <section>
-<h2>Metrics</h2>
+  <h2>Creating the horizon chart</h2>
 
-<p> Now we can use the source to instantiate as many metrics as necessary.
-Those metrics will point to a specific file (or sample). To start, we will work
-on a single sample (sample 18277). We store the metric in a Javascript array so
-we can add more metrics (samples) later.
+  <p> If you are not familiar with Javascript, functional programming and common
+  D3 patterns, this chunk of code may look unreadable. Bear with me here:
 
-<pre><code class="javascript">
-metric = [ source_bedfile.metric("data/18277.bed") ];
-</code></pre>
+  <pre><code class="javascript">
+  d3.select("body").selectAll(".horizon")
+      .data(metrics)
+    .enter().insert("div", ".bottom")
+      .attr("class", "horizon")
+    .call(context.horizon()
+      .format(d3.format(".2")));
+  </code></pre>
 
-<p> Now DNAism is ready to retrieve data for that particular sample. We can now
-start creating the visual elements.
+  <p> It is a fundamental <a href="http://bost.ocks.org/mike/bar/">pattern</a> in
+  D3 and you should master it if you want to use DNAism beyond the basics.
+
+  <p> What we are doing is selecting the html element where we will be drawing
+  the horizon chart on (or charts if there is more than one sample we are working
+  on). We also associate metrics (the data) to that selection and apply the
+  necessary css styles to it (horizon class). Finally, D3 calls <span
+  class="api">context.horizon()</span> to create the necessary visual elements
+  for the metric(sample) we want to create. Remember, in this case we have only
+  one sample.
+
+
+  <p> And here you have the result:
+
+  <div id="single_horizon"> </div>
+
+  <script>
+  var context = dnaism.context()
+                 .start(1100000)
+                 .stop(1200000)
+                 .size(800)
+                 .chrm('Chr17')
+                 .step(2);
+
+  var source_bedfile = context.bedfile();
+
+  var metrics = [ source_bedfile.metric("data/18277.bed")] ;
+
+  d3.select("#single_horizon").selectAll(".horizon")
+      .data(metrics)
+    .enter().insert("div", ".bottom")
+      .attr("class", "horizon")
+    .call(context.horizon()
+      .format(d3.format(".2")));
+  </script>
+
+  <p> Notice how abnormal regions are easily spot (high and low coverage).
+  Now we can explore the read depth for more samples, just by adding them to
+  the metrics array:
+
+  <pre><code class="javascript">
+  var metrics = [
+    source_bedfile.metric("data/18277.bed"),
+    source_bedfile.metric("data/19466.bed"),
+    source_bedfile.metric("data/23138.bed"),
+  ];
+  </code></pre>
+
+  <div id="three_samples"> </div>
+
+  <script>
+  var context = dnaism.context()
+                 .start(1100000)
+                 .stop(1200000)
+                 .size(800)
+                 .chrm('Chr17')
+                 .step(2);
+
+  var source_bedfile = context.bedfile();
+
+  var metrics = [
+    source_bedfile.metric("data/18277.bed"),
+    source_bedfile.metric("data/19466.bed"),
+    source_bedfile.metric("data/23138.bed"),
+  ];
+
+  d3.select("#three_samples").selectAll(".horizon")
+      .data(metrics)
+    .enter().insert("div", ".bottom")
+      .attr("class", "horizon")
+    .call(context.horizon()
+      .format(d3.format(".2")));
+  </script>
+
+  <p> We can use the <span class="api">axis()</span> component now to help us determine what part
+  of the genome we are exploring:
+
+  <div id="with_axis"> </div>
+
+  <script>
+  var context = dnaism.context()
+                 .start(1100000)
+                 .stop(1200000)
+                 .size(800)
+                 .chrm('Chr17')
+                 .step(2);
+
+  d3.select("#with_axis").selectAll(".axis")
+      .data(["top", "bottom"])
+    .enter().append("div")
+      .attr("class", function(d) { return d + " axis"; })
+      .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+  var source_bedfile = context.bedfile();
+
+  var metrics = [
+    source_bedfile.metric("data/18277.bed"),
+    source_bedfile.metric("data/19466.bed"),
+    source_bedfile.metric("data/23138.bed"),
+  ];
+
+  d3.select("#with_axis").selectAll(".horizon")
+      .data(metrics)
+    .enter().insert("div", ".bottom")
+      .attr("class", "horizon")
+    .call(context.horizon()
+      .format(d3.format(".2")));
+  </script>
+
+
+
+  <p> And finally, we can add a <span class="api">rule()</span> to help us
+  compare the data value, for a specific location, across the different samples. Try
+  hovering the mouse over the chart:
+
+  <div id="with_rule"> </div>
+
+  <script>
+  var context = dnaism.context()
+                 .start(1100000)
+                 .stop(1200000)
+                 .size(800)
+                 .chrm('Chr17')
+                 .step(2);
+
+  d3.select("#with_rule").selectAll(".axis")
+      .data(["top", "bottom"])
+    .enter().append("div")
+      .attr("class", function(d) { return d + " axis"; })
+      .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+  d3.select("body").append("div")
+      .attr("class", "rule")
+      .call(context.rule());
+
+  var source_bedfile = context.bedfile();
+
+  var metrics = [
+    source_bedfile.metric("data/18277.bed"),
+    source_bedfile.metric("data/19466.bed"),
+    source_bedfile.metric("data/23138.bed"),
+  ];
+
+  d3.select("#with_rule").selectAll(".horizon")
+      .data(metrics)
+    .enter().insert("div", ".bottom")
+      .attr("class", "horizon")
+    .call(context.horizon()
+      .format(d3.format(".2")));
+  </script>
+
+  <p> And here is how the final piece of code looks like:
+
+  <pre><code class="javascript">
+  var context = dnaism.context()
+                 .start(1100000)
+                 .stop(1200000)
+                 .size(800)
+                 .chrm('Chr17');
+
+  d3.select("#with_rule").selectAll(".axis")
+      .data(["top", "bottom"])
+    .enter().append("div")
+      .attr("class", function(d) { return d + " axis"; })
+      .each(function(d) {
+        d3.select(this).call(context.axis().ticks(12).orient(d));
+      });
+
+  d3.select("body").append("div")
+      .attr("class", "rule")
+      .call(context.rule());
+
+  var source_bedfile = context.bedfile();
+
+  var metrics = [
+    source_bedfile.metric("data/18277.bed"),
+    source_bedfile.metric("data/19466.bed"),
+    source_bedfile.metric("data/23138.bed"),
+  ];
+
+  d3.select("#with_rule").selectAll(".horizon")
+      .data(metrics)
+    .enter().insert("div", ".bottom")
+      .attr("class", "horizon")
+    .call(context.horizon()
+      .format(d3.format(".2")));
+
+  </code>
+  </pre>
 </section>
-
-
-
 
 
 <section>
-<h2>Creating the horizon chart</h2>
+  <h2>Using other sources</h2>
 
-<p> If you are not familiar with Javascript, functional programming and common
-D3 patterns, this chunk of code may look unreadable. Bear with me here:
+  <p> If the region of the genome we are exploring is large, the browser
+  will have to load a huge number of data points. That may be a problem depending
+  the amount of memory you have in your system. But there is a solution to this issue.
 
-<pre><code class="javascript">
-d3.select("body").selectAll(".horizon")
-    .data(metrics)
-  .enter().insert("div", ".bottom")
-    .attr("class", "horizon")
-  .call(context.horizon()
-    .format(d3.format(".2")));
-</code></pre>
+  <p> DNAism is data format and backend agnostic. You can extend DNAism to
+  accommodate the specific details of your own datasets. This flexibility allow
+  us, for example, to change our sources to make sure we only sent to the browser
+  the data points that are necessary for the visualization we intend.
 
-<p> It is a fundamental <a href="http://bost.ocks.org/mike/bar/">pattern</a> in
-D3 and you should master it if you want to use DNAism beyond the basics.
+  <p> When we create new sources, we are extending the ways for DNAism to load
+  datasets. A source has a metric method which encapsulates all the logic for how
+  to retrieve data for a specific genome location.  The <span
+  class="api">horizon()</span> component will make calls to each of the metrics
+  to retrieve the necessary data points that will be used in each horizon 
+  chart.
 
-<p> What we are doing is selecting the html element where we will be drawing
-the horizon chart on (or charts if there is more than one sample we are working
-on). We also associate metrics (the data) to that selection and apply the
-necessary css styles to it (horizon class). Finally, D3 calls <span
-class="api">context.horizon()</span> to create the necessary visual elements
-for the metric(sample) we want to create. Remember, in this case we have only
-one sample.
+  <p> In the logic for the most simple source (bedfile), a request is made to
+  the webserver to retrieve the whole file associated with the metric (the sample
+  we are working on). When the rendering happens, DNAism has to reduce the number
+  raw data points to fit the available number of pixels in the visualization. 
 
-<p> And here you have the result:
-
-<div id="single_horizon"> </div>
-
-<script>
-var context = dnaism.context()
-               .start(1100000)
-               .stop(1200000)
-               .size(800)
-               .chrm('Chr17')
-               .step(2);
-
-var source_bedfile = context.bedfile();
-
-var metrics = [ source_bedfile.metric("data/18277.bed")] ;
-
-d3.select("#single_horizon").selectAll(".horizon")
-    .data(metrics)
-  .enter().insert("div", ".bottom")
-    .attr("class", "horizon")
-  .call(context.horizon()
-    .format(d3.format(".2")));
-</script>
-
-<p> Notice how abnormal regions are easily spot (high and low coverage).
-Now we can explore the read depth for more samples, just by adding them to
-the metrics array:
-
-<pre><code class="javascript">
-var metrics = [
-  source_bedfile.metric("data/18277.bed"),
-  source_bedfile.metric("data/19466.bed"),
-  source_bedfile.metric("data/23138.bed"),
-];
-</code></pre>
-
-<div id="three_samples"> </div>
-
-<script>
-var context = dnaism.context()
-               .start(1100000)
-               .stop(1200000)
-               .size(800)
-               .chrm('Chr17')
-               .step(2);
-
-var source_bedfile = context.bedfile();
-
-var metrics = [
-  source_bedfile.metric("data/18277.bed"),
-  source_bedfile.metric("data/19466.bed"),
-  source_bedfile.metric("data/23138.bed"),
-];
-
-d3.select("#three_samples").selectAll(".horizon")
-    .data(metrics)
-  .enter().insert("div", ".bottom")
-    .attr("class", "horizon")
-  .call(context.horizon()
-    .format(d3.format(".2")));
-</script>
-
-<p> We can use the <span class="api">axis()</span> component now to help us determine what part
-of the genome we are exploring:
-
-<div id="with_axis"> </div>
-
-<script>
-var context = dnaism.context()
-               .start(1100000)
-               .stop(1200000)
-               .size(800)
-               .chrm('Chr17')
-               .step(2);
-
-d3.select("#with_axis").selectAll(".axis")
-    .data(["top", "bottom"])
-  .enter().append("div")
-    .attr("class", function(d) { return d + " axis"; })
-    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
-
-var source_bedfile = context.bedfile();
-
-var metrics = [
-  source_bedfile.metric("data/18277.bed"),
-  source_bedfile.metric("data/19466.bed"),
-  source_bedfile.metric("data/23138.bed"),
-];
-
-d3.select("#with_axis").selectAll(".horizon")
-    .data(metrics)
-  .enter().insert("div", ".bottom")
-    .attr("class", "horizon")
-  .call(context.horizon()
-    .format(d3.format(".2")));
-</script>
-
-
-
-<p> And finally, we can add a <span class="api">rule()</span> to help us
-compare the data value, for a specific location, across the different samples. Try
-hovering the mouse over the chart:
-
-<div id="with_rule"> </div>
-
-<script>
-var context = dnaism.context()
-               .start(1100000)
-               .stop(1200000)
-               .size(800)
-               .chrm('Chr17')
-               .step(2);
-
-d3.select("#with_rule").selectAll(".axis")
-    .data(["top", "bottom"])
-  .enter().append("div")
-    .attr("class", function(d) { return d + " axis"; })
-    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
-
-d3.select("body").append("div")
-    .attr("class", "rule")
-    .call(context.rule());
-
-var source_bedfile = context.bedfile();
-
-var metrics = [
-  source_bedfile.metric("data/18277.bed"),
-  source_bedfile.metric("data/19466.bed"),
-  source_bedfile.metric("data/23138.bed"),
-];
-
-d3.select("#with_rule").selectAll(".horizon")
-    .data(metrics)
-  .enter().insert("div", ".bottom")
-    .attr("class", "horizon")
-  .call(context.horizon()
-    .format(d3.format(".2")));
-</script>
-
-<p> And here is how the final piece of code looks like:
-
-<pre><code class="javascript">
-var context = dnaism.context()
-               .start(1100000)
-               .stop(1200000)
-               .size(800)
-               .chrm('Chr17');
-
-d3.select("#with_rule").selectAll(".axis")
-    .data(["top", "bottom"])
-  .enter().append("div")
-    .attr("class", function(d) { return d + " axis"; })
-    .each(function(d) {
-      d3.select(this).call(context.axis().ticks(12).orient(d));
-    });
-
-d3.select("body").append("div")
-    .attr("class", "rule")
-    .call(context.rule());
-
-var source_bedfile = context.bedfile();
-
-var metrics = [
-  source_bedfile.metric("data/18277.bed"),
-  source_bedfile.metric("data/19466.bed"),
-  source_bedfile.metric("data/23138.bed"),
-];
-
-d3.select("#with_rule").selectAll(".horizon")
-    .data(metrics)
-  .enter().insert("div", ".bottom")
-    .attr("class", "horizon")
-  .call(context.horizon()
-    .format(d3.format(".2")));
-
-</code>
-</pre>
+  <p> The bedserver source implements the same logic, but it performs a request
+  to a RESTful service. The backend does all the heavy lifting and only
+  returns the necessary data points. If you want to know more about how the
+  backend works, take a look at <a
+  href="https://github.com/drio/bedserver">this</a>.  You'll see the server
+  indexes the bedfiles to speed up the queries and quickly access the regions of
+  interest.  
 </section>
 
 <section>
-<h2>Using other sources</h2>
+  <h2>Questions, comments and feedback</h2>
 
-<p> If the region of the genome we are exploring is large, the browser
-will have to load a huge number of data points. That may be a problem depending
-the amount of memory we have in our system. We can do better.
-
-<p> DNAism is data format and backend agnostic. You can extend DNAism to
-accommodate the specific details of your own datasets. This flexibility allow
-us, for example, to change our sources to make sure we only sent to the browser
-the necessary data points used in the visualization.
-
-<p> When we create new sources, we are extending the ways for DNAism to load
-datasets. A source has a metric method which encapsulates all the logic for how
-to retrieve data for a specific genome location.  The <span
-class="api">horizon()</span> component will make calls to each of the metrics
-to retrieve the necessary data points that will be used in each horizon 
-chart.
-
-<p> In the logic for the most simple source (bedfile), a request is made to the
-webserver to retrieve the whole file associated with the metric (the sample we
-are working on). When the rendering happens, DNAism has to reduce the raw data
-points to fit the available number of pixels in the visualization. 
-
-<p> The bedserver source implements the same logic, but it performs a request
-to a RESTful service. The backend does all the heavy lifting and only
-returns the necessary data points. If you want to know more about how the
-backend works, take a look at <a
-href="https://github.com/drio/bedserver">this</a>.  You'll see the server
-indexes the bedfiles to speed up the queries and quickly access the regions of
-interest.  
+  If you encounter any problem when using DNAism or you have feedback, please
+  open a <a href="https://github.com/drio/dnaism/issues">ticket</a>.  We promise
+  we'll help you out as soon as possible.
 </section>
 
-<section>
-<h2>Questions, comments and feedback</h2>
-
-If you encounter any problem when using DNAism or you have feedback, please
-open a <a href="https://github.com/drio/dnaism/issues">ticket</a>.  We promise
-we'll help you out as soon as possible.
-
-</section>
-
-<footer>  </footer>
+<footer></footer>
 
 
 <script src="highlight/highlight.pack.js"></script>

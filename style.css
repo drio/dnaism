@@ -78,8 +78,8 @@ a:hover {
 
 section {
   font-family: "Open sans";
-  font-size: 17px;
-  padding-top: 20px;
+  font-size: 18px;
+  padding-top: 5px;
 }
 
 
@@ -206,6 +206,10 @@ h2 {
 
 pre, code {
   font-family: "Menlo";
+  font-size: 14px;
+  padding: 0px;  
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 footer {
@@ -213,5 +217,12 @@ footer {
   font-size: 12px;
   text-align: right;
   padding-top: 40px;
+}
+
+#ack_mike {
+  color: grey;
+  font-size: 12px;
+  text-align: right;
+  padding-top: 1px;
 }
 
