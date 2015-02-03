@@ -7,6 +7,25 @@ Main site [here](http://drio.github.io/dnaism/).
 Please open a [ticket](https://github.com/drio/dnaism/issues) and we will
 be happy to help you.
 
+### For the impatient
+
+Open your console (we need git, tar and python for this to work) and run:
+
+```sh
+  $ git clone https://github.com/drio/dnaism.git
+  $ cd dnaism/example/depth
+  $ make
+  Unpacking bed files ...
+  point your browser here: http://localhost:8888
+  python3 -m http.server 8888
+  Serving HTTP on 0.0.0.0 port 8888 ...
+```
+  
+And now point your browser to [localhost:8888](http://localhost:8888).
+
+If everything went well you should see multiple horizon charts encoding the
+read depth for multiple genomic samples for a small region of a rhesus genome.
+
 #### Intro
 
 DNAism is a modified version of [Cubism](http://square.github.io/cubism/) aimed
