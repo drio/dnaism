@@ -153,7 +153,7 @@ var metrics = [
 ```
 
 
-#### Real data (Show me the money!)
+#### Real data
 
 Here is another example, this time with real data. We computed the
 [read depth](http://en.wikipedia.org/wiki/Deep_sequencing) across
