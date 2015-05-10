@@ -36,8 +36,7 @@ time-series data using [Horizon](http://bl.ocks.org/mbostock/1483226) charts.
 In time-series data your metrics change over time, with DNA it changes
 over genomic coordinates (e.g. `chr17:45000`).
 
-Head to the [wiki](https://github.com/drio/dnaism/wiki) for more details on the API reference (still
-a work in progress).
+Head to the [wiki](https://github.com/drio/dnaism/wiki) for more details on the API reference.
 
 There are two other projects that go together with DNAism: [bedserver](https://github.com/drio/bedserver) and
 [bedbrowser](https://github.com/drio/bedbrowser). Bedserver is a lightweight backend for the
