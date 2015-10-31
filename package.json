@@ -1,6 +1,6 @@
 {
   "name": "dnaism",
-  "version": "0.3.3",
+  "version": "0.3.9",
   "description": "Horizon chart js library for DNA data.",
   "main": "dnaism.v1.js",
   "directories": {

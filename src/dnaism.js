@@ -1,11 +1,11 @@
-var dnaism = {};
-dnaism.version = "0.3.3";
+var VERSION = "0.3.9",
+    dnaism;
 
-if (window === 'undefined') { // node
-  exports = dnaism;
-} else { // browser
-  window.dnaism = dnaism;
+if (typeof window === 'undefined') { // node
+  dnaism = exports;
+} else {
+  dnaism = exports.dnaism = {};
 }
 
-//var dnaism = exports.dnaism = {version: "X.Y.Z"};
+dnaism.version = VERSION;
 
