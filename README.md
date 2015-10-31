@@ -20,11 +20,14 @@ Open your console (we need git, tar and python for this to work) and run:
   python3 -m http.server 8888
   Serving HTTP on 0.0.0.0 port 8888 ...
 ```
-  
+
 And now point your browser to [localhost:8888](http://localhost:8888).
 
 If everything went well you should see multiple horizon charts encoding the
 read depth for multiple genomic samples for a small region of a rhesus genome.
+
+Dnaism is also a npm [package](https://www.npmjs.com/package/dnaism) and a
+[biojs](http://biojs.io/d/dnaism) package.
 
 #### Intro
 
