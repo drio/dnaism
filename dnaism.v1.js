@@ -1,5 +1,5 @@
 (function(exports){
-var dnaism = exports.dnaism = {version: "0.1.0"};
+var dnaism = exports.dnaism = {version: "0.3.1"};
 var dnaism_id = 0;
 function dnaism_identity(d) { return d; }
 dnaism.context = function() {

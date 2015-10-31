@@ -1,1 +1,1 @@
-var dnaism = exports.dnaism = {version: "0.1.0"};
+var dnaism = exports.dnaism = {version: "0.3.1"};
