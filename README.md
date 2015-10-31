@@ -26,7 +26,7 @@ And now point your browser to [localhost:8888](http://localhost:8888).
 If everything went well you should see multiple horizon charts encoding the
 read depth for multiple genomic samples for a small region of a rhesus genome.
 
-Dnaism is also a npm [package](https://www.npmjs.com/package/dnaism) and a
+Dnaism is also a [npm](https://www.npmjs.com/package/dnaism) and a
 [biojs](http://biojs.io/d/dnaism) package.
 
 #### Intro
