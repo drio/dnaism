@@ -1,0 +1,30 @@
+{
+  "name": "dnaism",
+  "version": "0.3.3",
+  "description": "Horizon chart js library for DNA data.",
+  "main": "dnaism.v1.js",
+  "directories": {
+    "example": "example",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"No test provided\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drio/dnaism.git"
+  },
+  "keywords": [
+    "visualization",
+    "viz",
+    "horizon",
+    "charts",
+    "biojs"
+  ],
+  "author": "David Rio Deiros <driodeiros@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drio/dnaism/issues"
+  },
+  "homepage": "https://github.com/drio/dnaism#readme"
+}
