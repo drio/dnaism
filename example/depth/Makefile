@@ -8,9 +8,6 @@ beds:
 index.html: index.template.html
 	./gen_html.py > $@
 
-from_server:
-	./from_server.sh
-
 serve:
 	@echo "--> point your browser here: http://localhost:8888"
 	python -m SimpleHTTPServer 8888
