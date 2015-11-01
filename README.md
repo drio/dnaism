@@ -154,6 +154,9 @@ var metrics = [
 ];
 ```
 
+More details can be found in the [wiki](https://github.com/drio/dnaism/wiki)
+and in the projects [page](http://drio.github.io/dnaism/).
+
 
 #### Real data
 
