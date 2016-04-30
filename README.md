@@ -1,6 +1,7 @@
 ### DNAism
 
 Main site [here](http://drio.github.io/dnaism/).
+Paper [here](http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0891-2).
 
 #### Questions, patches, comments, feedback?
 
